@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="projlab2:jar2">
-    <output-path>$USER_HOME$/Desktop/4. FÉLÉV/projlab/TESZTEK</output-path>
-    <root id="archive" name="projlab2.jar">
-      <element id="module-output" name="projlab2" />
-    </root>
-  </artifact>
-</component>
