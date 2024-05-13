@@ -7,6 +7,6 @@ public class UnitTest {
     public void Test(){
         Pump p = new Pump();
         p.Repair();
-        assertEquals(p.getBroken(), false);
+        assertEquals(false,p.getBroken());
     }
 }
