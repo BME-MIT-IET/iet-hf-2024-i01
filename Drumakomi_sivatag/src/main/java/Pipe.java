@@ -57,19 +57,19 @@ public class Pipe extends Element {
                 return true;
             }
             if(slippery>0){
-                int r = new Random().nextInt(0,2);
+                int r = new Random().nextInt(3) - 1;
                 p.getElement().Remove(p);
                 p.setElement(this.GetNeighbours().get(r));
                 this.player.clear();
                 this.GetNeighbours().get(r).SetPlayer(p);
                 System.out.println("A jatekos elcsuszott(, +1 lepest kapott a jatekos a kellemetlensegekert 😎).");
-                System.out.println("""
+                /*System.out.println("""
                         ___  ___  _ __ _ __ _   _\s
                         / __|/ _ \\| '__| '__| | | |
                         \\__ \\ (_) | |  | |  | |_| |
                         |___/\\___/|_|  |_|   \\__, |
                                               __/ |
-                                             |___/\s""");
+                                             |___/\s""");*/
                 this.GetNeighbours().get(r).Info();
                 return false;
             }
@@ -88,7 +88,7 @@ public class Pipe extends Element {
         if (damaged) {
             damaged = false;
             if(Game.rand){
-                notDamageable = new Random().nextInt(1,3);
+                notDamageable = new Random().nextInt(3) - 1;
             }else{notDamageable=3;}
             System.out.println("A cso meg lett javitva.");
             return true;
@@ -117,7 +117,7 @@ public class Pipe extends Element {
     public boolean SetStucky() {
         if (stucky == 0) {
             if(Game.rand){
-                stucky = new Random().nextInt(1, 3) ;
+                stucky = new Random().nextInt( 3) - 1;
             }else{stucky=4;}
             System.out.println("A cso ragadosra lett allitva " + stucky + " korig.");
             return true;
@@ -133,7 +133,7 @@ public class Pipe extends Element {
     public boolean SetSlippery() {
         if (slippery == 0) {
             if(Game.rand){
-                slippery = new Random().nextInt(1, 3) ;
+                slippery = new Random().nextInt(3) ;
             }else{slippery=4;}
             System.out.println("A cso csuszossa lett allitva " + slippery + " korig.");
             return true;
@@ -178,8 +178,8 @@ public class Pipe extends Element {
 
     /**
      * atkot egy csovet egy masik pumpaba.
-     * @param neighbourIndex - input(0), output(1)
-     * @param pumpIndex - pumpa tomb valahanyadik eleme;
+     * @param szomszed - input(0), output(1)
+     * @param pump - pumpa tomb valahanyadik eleme;
      * @return Visszaadja, hogy sikeres volt-e az atkotes
      */
     public boolean ChangePipe(Pump szomszed, Pump pump){
