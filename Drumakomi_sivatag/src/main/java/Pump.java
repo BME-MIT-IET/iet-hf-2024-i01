@@ -140,5 +140,11 @@ public class Pump extends Node {
         System.out.println("Sikeres pumpa atallitas.");
         return true;
     }
+    public Pipe getInput() {
+        return input;
+    }
+    public Pipe getOutput() {
+        return output;
+    }
 }
 
