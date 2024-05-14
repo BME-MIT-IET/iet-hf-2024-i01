@@ -47,7 +47,7 @@ public class Cisterns extends Node {
     /**
      * (Noveli a pumpak szamat.) Egy uj felveheto pumpa item generalasa, amit a szerelok fel tudnak venni.
      */
-    private void CreatePump(){
+    public void CreatePump(){
         this.availablePumps++;
         System.out.println("Generalodott egy pumpa a ciszternaknal");
     }
