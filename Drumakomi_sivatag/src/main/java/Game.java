@@ -92,7 +92,7 @@ public class Game implements Notify { //Barni
      * @param pugt A pumpa generalas  ideje
      * @param pigt A cso generalas ideje
      */
-    public void Settings(int pugt,int pigt){
+    public static void Settings(int pugt,int pigt){
         PumpGenTime=pugt;
         PipeGenTime=pigt;
         rand = false;
