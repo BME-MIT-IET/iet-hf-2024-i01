@@ -22,7 +22,7 @@ public class GameView extends JFrame implements ActionListener {
     private int time = 5;
     private int xcord =1280;
     private int ycord =720;
-    private final static String hegyImage = "\\src\\main\\java\\images\\hegy.png";
+    private final static String HEGYIMAGE = "\\src\\main\\java\\images\\hegy.png";
 
     static ArrayList<Image> Pipe = new ArrayList<>();
     static ArrayList<Image> Pump = new ArrayList<>();
@@ -56,7 +56,7 @@ public class GameView extends JFrame implements ActionListener {
             Pump.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\pumpak\\vizesPumpa.png").getImage());
 
             ciszterna = new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\ciszterna.png").getImage();
-            hegy = new ImageIcon(new File(".").getCanonicalPath() + hegyImage).getImage();
+            hegy = new ImageIcon(new File(".").getCanonicalPath() + HEGYIMAGE).getImage();
             gameBackground = (new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\gameBG.png").getImage());
 
             szerelo = new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\szerelo.png").getImage();
@@ -72,7 +72,7 @@ public class GameView extends JFrame implements ActionListener {
         this.setTitle("Csohalozat");
         this.setSize(xcord, ycord);
         try {
-            this.setIconImage(new ImageIcon(new java.io.File(".").getCanonicalPath() + hegyImage).getImage());
+            this.setIconImage(new ImageIcon(new java.io.File(".").getCanonicalPath() + HEGYIMAGE).getImage());
             Image img = new ImageIcon(new java.io.File(".").getCanonicalPath() + "\\src\\main\\java\\images\\bg.png").getImage();
             menu = new JPanel(null) {
                 public void paintComponent(Graphics g) {
@@ -102,7 +102,7 @@ public class GameView extends JFrame implements ActionListener {
         this.repaint();
         try {
             String path = new java.io.File(".").getCanonicalPath();
-            this.setIconImage(new ImageIcon(path + hegyImage).getImage());
+            this.setIconImage(new ImageIcon(path + HEGYIMAGE).getImage());
             Image img = new ImageIcon(path + "\\src\\main\\java\\images\\bg.png").getImage();
             settings = new JPanel(new GridLayout(4, 2));
         }
