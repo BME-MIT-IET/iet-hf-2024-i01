@@ -7,7 +7,7 @@ public class Pipe extends Element {
     /**
      * Randomizer
      */
-    private random = new Random();
+    private Random random = new Random();
 
     /**
      * Torott a cso vagy nem

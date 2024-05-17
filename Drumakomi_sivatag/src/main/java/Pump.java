@@ -5,6 +5,11 @@ import java.util.Random;
 //Csaba
 public class Pump extends Node {
     /**
+     * Randomizer
+     */
+    private Random random = new Random();
+
+    /**
      * Bemeneti cso
      */
     private Pipe input;
@@ -46,7 +51,7 @@ public class Pump extends Node {
     public void TimerNotify(){
         counter=0;
         if(Game.rand){
-            if (new Random().nextInt(11)>8){
+            if (random.nextInt(11)>8){
                 broken = true;
             }
         }else{broken=false;}
