@@ -246,6 +246,7 @@ private boolean processEvent(Player player, String[] event) {
             return false;
         case "exit":
             System.exit(0);
+            break;
         case "repair":
             if (player instanceof Mechanic) {
                 return ((Mechanic) player).Repair();
