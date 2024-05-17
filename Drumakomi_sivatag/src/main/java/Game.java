@@ -421,6 +421,10 @@ public class Game implements Notify { //Barni
             objectOutputStream.writeObject(list);
             objectOutputStream.close();
         }catch (Exception e){System.err.println("Valami hiba tortent.");}
+        finally{
+            fileOutputStream.close();
+            objectOutputStream.close();
+        }
     }
 
     public void Load(String file){
@@ -444,6 +448,10 @@ public class Game implements Notify { //Barni
             }
             TimerNotify();
         }catch (Exception e){System.err.println("Valami hiba tortent.");}
+        finally{
+            fileInputStream.close();
+            objectInputStream.close();
+        }
     }
     /**
      * Meghivja az osszes olyan osztaly TimerNotify-at, aminek lepnie kell, mert telt ido
