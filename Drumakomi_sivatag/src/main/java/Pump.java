@@ -17,6 +17,11 @@ public class Pump extends Node {
      * Kimeneti cso
      */
     private Pipe output;
+
+    public void setBroken(boolean broken) {
+        this.broken = broken;
+    }
+
     /**
      * Jelzi, hogy el van -e torve a cso.
      * True, ha el van.

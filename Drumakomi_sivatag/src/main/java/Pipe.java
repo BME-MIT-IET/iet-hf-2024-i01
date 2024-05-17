@@ -9,6 +9,22 @@ public class Pipe extends Element {
      */
     private Random random = new Random();
 
+    public void setDamaged(boolean damaged) {
+        this.damaged = damaged;
+    }
+
+    public void setSlippery(int slippery) {
+        this.slippery = slippery;
+    }
+
+    public void setNotDamageable(int notDamageable) {
+        this.notDamageable = notDamageable;
+    }
+
+    public void setStucky(int stucky) {
+        this.stucky = stucky;
+    }
+
     /**
      * Torott a cso vagy nem
      */
