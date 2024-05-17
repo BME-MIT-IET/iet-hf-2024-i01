@@ -7,7 +7,7 @@ import java.io.*;
 public class TableView extends JPanel implements KeyListener {
 
     HashMap<Element, View> elements;
-    Game game;
+    transient Game game;
     JLabel mscore=new JLabel("Mechanic: 0");
     JLabel sscore=new JLabel("Saboteur: 0");
     JLabel pumpes=new JLabel("Pumpes: 0");

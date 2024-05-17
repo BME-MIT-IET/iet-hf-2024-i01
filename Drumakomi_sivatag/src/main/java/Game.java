@@ -259,6 +259,7 @@ public class Game implements Notify { //Barni
                             break;
                         case "exit":
                             System.exit(0);
+                            break;
                         default:
                             System.out.println("Hibas a megadott parancs! A Help parancsal tudod a parancsok listajat kilistazni.");
                             break;

@@ -15,7 +15,7 @@ public class View extends JComponent implements MouseListener, MouseMotionListen
     protected int y;
 
     Element element;
-    Game game;
+    transient Game game;
 
     public View() {}
     public View(int _x, int _y, Element el, Game g) {
@@ -50,22 +50,22 @@ public class View extends JComponent implements MouseListener, MouseMotionListen
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+    	//unused in the program
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+    	//unused in the program
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+    	//unused in the program
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+    	//unused in the program
     }
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -79,6 +79,6 @@ public class View extends JComponent implements MouseListener, MouseMotionListen
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+    	//unused in the program
     }
 }
