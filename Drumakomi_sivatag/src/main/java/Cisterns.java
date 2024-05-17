@@ -4,12 +4,6 @@ import java.util.Random;
  * Ide folyik a jatek soran a viz
  */
 public class Cisterns extends Node {
-    /**
-     * Konstruktor
-     */
-    public Cisterns(){
-    	
-    }
 
     /**
      * Randomizer

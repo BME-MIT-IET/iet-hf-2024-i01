@@ -358,11 +358,8 @@ private void printHelp() {
      * @param file A file amibe ment
      */
     public void SaveAndExit(String file) {
-    	FileOutputStream fileOutputStream = null;
-    	ObjectOutputStream objectOutputStream = null;
-        try{
-        	fileOutputStream = new FileOutputStream(file);
-            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        try( FileOutputStream fileOutputStream = new FileOutputStream(file);
+        		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream) ){
             ArrayList<Object> list=new ArrayList<>();
             ArrayList<Integer> ints=new ArrayList<>();
             ints.add((time-1));
@@ -379,26 +376,11 @@ private void printHelp() {
             objectOutputStream.writeObject(list);
             objectOutputStream.close();
         }catch (Exception e){System.err.println("Valami hiba tortent.");}
-        finally{
-        	try
-        	{
-        		fileOutputStream.close();
-                objectOutputStream.close();
-        	}
-        	catch(Exception e)
-        	{
-        		  System.err.println("Hiba történt a fájl bezárása közben.");
-        	}
-        	
-        }
     }
 
     public void Load(String file){
-    	  FileInputStream fileInputStream= null;
-          ObjectInputStream objectInputStream= null;
-        try{
-            fileInputStream=new FileInputStream(file);
-            objectInputStream=new ObjectInputStream(fileInputStream);
+        try (  FileInputStream fileInputStream = new FileInputStream(file);
+        		ObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);){
             ArrayList<Object> list=(ArrayList<Object>) objectInputStream.readObject();
             PipeSystem.setMechanic((ArrayList<Mechanic>) list.get(0));
             PipeSystem.setSaboteur((ArrayList<Saboteur>) list.get(1));
@@ -416,18 +398,6 @@ private void printHelp() {
             }
             TimerNotify();
         }catch (Exception e){System.err.println("Valami hiba tortent.");}
-        finally{
-        	try
-        	{
-        		fileInputStream.close();
-                objectInputStream.close();
-        	}
-        	catch(Exception e)
-        	{
-        		System.err.println("Hiba történt a fájl megnyitása közben.");
-        	}
-            
-        }
     }
     /**
      * Meghivja az osszes olyan osztaly TimerNotify-at, aminek lepnie kell, mert telt ido
