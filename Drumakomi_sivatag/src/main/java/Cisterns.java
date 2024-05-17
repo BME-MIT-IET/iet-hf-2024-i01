@@ -8,8 +8,14 @@ public class Cisterns extends Node {
      * Konstruktor
      */
     public Cisterns(){
-        //PipeSystem.getViews().put(this,new CisternsView());
+    	
     }
+
+    /**
+     * Randomizer
+     */
+    private Random random = new Random();
+
     /**
      * Az elerheto pumpak szama
      */
@@ -75,7 +81,7 @@ public class Cisterns extends Node {
     @Override
     public void TimerNotify(){
         if(Game.rand){
-            int number=new Random().nextInt(100);
+            int number= random.nextInt(100);
             if(number>1 && number<20){
                 CreatePipe();
             }else if(number>30 && number<75){

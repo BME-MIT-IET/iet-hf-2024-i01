@@ -38,106 +38,100 @@ public class PipeView extends View implements EventListener {
 
     @Override
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    super.paintComponent(g);
 
-        Image current=GameView.Pipe.get(0);
-        if (model.vizezett){
-            current=GameView.Pipe.get(15);
-        }
-        if(model.isstucky() && !model.vizezett){
-            current=GameView.Pipe.get(9);
-        }
-        if(model.isSlippery() && !model.vizezett){
-            current=GameView.Pipe.get(1);
-        }
-        if(model.isSlippery() && model.vizezett){
-            current=GameView.Pipe.get(8);
-        }
-        if(model.isstucky() && model.vizezett){
-            current=GameView.Pipe.get(12);
-        }
-        if(model.isstucky() && model.isSlippery() && !model.vizezett){
-            current=GameView.Pipe.get(2);
-        }
-        if(model.isstucky() && model.isSlippery() && model.vizezett){
-            current=GameView.Pipe.get(5);
-        }
-        if(model.getDamaged()){
-            current=GameView.Pipe.get(13);
-        }
-        if(model.getDamaged() && model.isSlippery()){
-            current=GameView.Pipe.get(6);
-        }
-        if(model.getDamaged() && model.isstucky()){
-            current=GameView.Pipe.get(10);
-        }
-        if(model.isstucky() && model.isSlippery() && !model.vizezett && model.getDamaged()){
-            current=GameView.Pipe.get(3);
-        }
+    Image current = selectPipeImage(); // Kiválasztjuk a megfelelő csőképet
 
+    View[] szomszedek = getSortedNeighbours(); // Szomszédok rendezése
+    double szelessseg = calculateWidth(szomszedek); // Cső szélességének kiszámítása
+    double magassag = calculateHeight(szomszedek); // Cső magasságának kiszámítása
 
-        //TODO: NULL SZOMSZED?!, egyik szomszed nincs bekotve
-        View szomszed1 = View.getTableView().getElements().get(model.GetNeighbours().get(0));
-        View szomszed2 = View.getTableView().getElements().get(model.GetNeighbours().get(1));
+    View[] neighbours = getSortedNeighbours(); 
+    drawPipe(g, current, szelessseg, magassag, neighbours);// Cső kirajzolása
 
-        //Rendezzük, hogy 1 legyen baloldalt
-        if (szomszed1.x > szomszed2.x) {
-            var temp = szomszed1;
-            szomszed1 = szomszed2;
-            szomszed2 = temp;
-        }
-
-        double szelessseg = szomszed1.x - szomszed2.x;
-        double magassag = szomszed1.y - szomszed2.y;
-
-        double atmero = Math.sqrt(szelessseg*szelessseg + magassag*magassag);
-
-        double forgatasiSzog = Math.atan(magassag/szelessseg);
-
-        Graphics2D g2d = (Graphics2D) g;
-        int w2 = getWidth() / 2;
-        int h2 = getHeight() / 2;
-
-        //g2d.translate(0, GameView.Pipe.get(0).getHeight(null)/2);
-
-        //TODO: 2D-re...
-        int baleltol = 41;
-        if (szomszed1 instanceof MountainsView)
-            baleltol = 73;
-
-        int jobblevag = 41;
-        if (szomszed2 instanceof CisternsView)
-            jobblevag = 85;
-
-
-
-
-        //angle = forgatasiSzog;
-        //g2d.rotate(forgatasiSzog, szomszed1.x - getX(), getHeight() / 2);
-       // this.setBounds(x,y, (int)abs((szelessseg)), GameView.Pipe.get(0).getHeight(null));
-        g.drawImage(current, 0, 0, (int) abs(szelessseg)-jobblevag-baleltol, current.getHeight(null), null);
-
-        //((magassag > 0) ? (int)magassag : 0)
-        //model.GetNeighbours().get(1);
-
-        //Image newImage = yourImage.getScaledInstance(newWidth, newHeight, Image.SCALE_DEFAULT);
-
-        if (model.player.size() > 0){
-            if (model.player.get(0) instanceof Mechanic){
-                g.drawImage(GameView.szerelo, 0, ((magassag > 0) ? (int)magassag : 0), null);
-            } else if (model.player.get(0) instanceof Saboteur){
-                g.drawImage(GameView.szabotor, 0, ((magassag > 0) ? (int)magassag : 0), null);
-            }
-        }
+    // Játékosok elhelyezése a csőn
+    if (!model.player.isEmpty()) {
+        int yPos = (int) Math.max(0, magassag);
+        Image playerImage = getPlayerImage();
+        g.drawImage(playerImage, 0, yPos, null);
     }
+}
+
+private Image selectPipeImage() {
+    if (model.vizezett) {
+        return GameView.Pipe.get(15); // Vízbe került cső
+    }
+    if (model.getDamaged()) {
+        return selectDamagedPipeImage();
+    }
+    if (model.isstucky() && model.isSlippery()) {
+        return GameView.Pipe.get(5); // Ragacsos és csúszós cső
+    }
+    if (!model.isstucky() && model.isSlippery()) {
+        return GameView.Pipe.get(1); // Csúszós cső
+    }
+    if (model.isstucky() && !model.isSlippery()) {
+        return GameView.Pipe.get(9); // Ragacsos cső
+    }
+    return GameView.Pipe.get(0); // Alapértelmezett csőkép
+}
+
+private Image selectDamagedPipeImage() {
+    if (model.isSlippery() && model.isstucky()) {
+        return GameView.Pipe.get(3); // Sérült, ragacsos és csúszós cső
+    }
+    if (model.isSlippery() && !model.isstucky()) {
+        return GameView.Pipe.get(6); // Sérült és csúszós cső
+    }
+    if (!model.isSlippery() && model.isstucky()) {
+        return GameView.Pipe.get(10); // Sérült és ragacsos cső
+    }
+    return GameView.Pipe.get(13); // Sérült cső
+}
+
+private View[] getSortedNeighbours() {
+    View[] neighbours = new View[2];
+    neighbours[0] = View.getTableView().getElements().get(model.GetNeighbours().get(0));
+    neighbours[1] = View.getTableView().getElements().get(model.GetNeighbours().get(1));
+
+    // Rendezzük a szomszédokat balról jobbra
+    if (neighbours[0].x_cord > neighbours[1].x_cord) {
+        View temp = neighbours[0];
+        neighbours[0] = neighbours[1];
+        neighbours[1] = temp;
+    }
+    return neighbours;
+}
+
+private double calculateWidth(View[] neighbours) {
+    return Math.abs(neighbours[0].x_cord - neighbours[1].x_cord);
+}
+
+private double calculateHeight(View[] neighbours) {
+    return Math.max(0, neighbours[0].y_cord - neighbours[1].y_cord);
+}
+
+private void drawPipe(Graphics g, Image current, double width, double height, View[] neighbours) {
+    int baleltol = (neighbours[0] instanceof MountainsView) ? 73 : 41;
+    int jobblevag = (neighbours[1] instanceof CisternsView) ? 85 : 41;
+    g.drawImage(current, 0, 0, (int) width - jobblevag - baleltol, current.getHeight(null), null);
+}
+
+private Image getPlayerImage() {
+    if (model.player.get(0) instanceof Mechanic) {
+        return GameView.szerelo;
+    } else if (model.player.get(0) instanceof Saboteur) {
+        return GameView.szabotor;
+    }
+    return null;
+}
 
     public void Connect(){
-        //TODO: NULL SZOMSZED?!, egyik szomszed nincs bekotve
         View szomszed1 = View.getTableView().getElements().get(model.GetNeighbours().get(0));
         View szomszed2 = View.getTableView().getElements().get(model.GetNeighbours().get(1));
 
         //Rendezzük, hogy 1 legyen baloldalt
-        if (szomszed1.x > szomszed2.x) {
+        if (szomszed1.x_cord > szomszed2.x_cord) {
             var temp = szomszed1;
             szomszed1 = szomszed2;
             szomszed2 = temp;
@@ -150,12 +144,12 @@ public class PipeView extends View implements EventListener {
         if (szomszed2 instanceof CisternsView)
             jobblevag = 85;
 
-        double szelessseg = szomszed1.x - szomszed2.x;
-        double magassag = szomszed1.y - szomszed2.y;
+        double szelessseg = szomszed1.x_cord - szomszed2.x_cord;
+        double magassag = szomszed1.y_cord - szomszed2.y_cord;
 
-        y = szomszed1.y-GameView.Pipe.get(0).getHeight(null)/2-((magassag > 0) ? (int)magassag : 0);
-        x = szomszed1.x + baleltol;
-        this.setBounds(x, y, (int)abs(szelessseg)-jobblevag-baleltol, /*GameView.Pipe.get(0).getWidth(null)*/ (int)abs(magassag)+(int)(GameView.Pipe.get(0).getHeight(null)*1.2));
+        y_cord = szomszed1.y_cord-GameView.Pipe.get(0).getHeight(null)/2-((magassag > 0) ? (int)magassag : 0);
+        x_cord = szomszed1.x_cord + baleltol;
+        this.setBounds(x_cord, y_cord, (int)abs(szelessseg)-jobblevag-baleltol, /*GameView.Pipe.get(0).getWidth(null)*/ (int)abs(magassag)+(int)(GameView.Pipe.get(0).getHeight(null)*1.2));
 
     }
 
