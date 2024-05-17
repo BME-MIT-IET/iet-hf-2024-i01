@@ -456,7 +456,7 @@ public class Game implements Notify { //Barni
     /**
      * Meghivja az osszes olyan osztaly TimerNotify-at, aminek lepnie kell, mert telt ido
      */
-    public void NotifyAll(){
+    public void NotifyAllTimePassed(){
 
         resetWater();
 
@@ -513,14 +513,14 @@ public class Game implements Notify { //Barni
         if (currentTeam) {
             Mechanic m = (Mechanic)currentPlayer;
             if (m.Repair()) {
-                NotifyAll();
+                NotifyAllTimePassed();
                 stepUsed();
             }
         }
     }
     public void Damage() { //KÉSZ
         if (currentPlayer.getElement().Damage()) {
-            NotifyAll();
+            NotifyAllTimePassed();
             stepUsed();
         }
     }
@@ -528,7 +528,7 @@ public class Game implements Notify { //Barni
         if (currentTeam) {
             Mechanic m = (Mechanic)currentPlayer;
             if (m.Pickuppump()) {
-                NotifyAll();
+                NotifyAllTimePassed();
                 stepUsed();
             }
         }
@@ -538,7 +538,7 @@ public class Game implements Notify { //Barni
             Mechanic m = (Mechanic) currentPlayer;
             boolean siker = m.CutPipe();
             if (siker) {
-                NotifyAll();
+                NotifyAllTimePassed();
                 stepUsed();
             }
             return siker;
@@ -548,7 +548,7 @@ public class Game implements Notify { //Barni
 
     public void SetStucky() {
         if (currentPlayer.SetStucky()) {
-            NotifyAll();
+            NotifyAllTimePassed();
             stepUsed();
         }
     }
@@ -556,7 +556,7 @@ public class Game implements Notify { //Barni
         if (!currentTeam) {
             Saboteur s = (Saboteur) currentPlayer;
             if (s.SetSlippery()) {
-                NotifyAll();
+                NotifyAllTimePassed();
                 stepUsed();
             }
         }
@@ -564,7 +564,7 @@ public class Game implements Notify { //Barni
 
     public void ChangePipe(Pump neighbourPump, Pump toConnect) {
         if(currentPlayer.getElement().ChangePipe(neighbourPump, toConnect)){
-            NotifyAll();
+            NotifyAllTimePassed();
             stepUsed();
         }
     }
@@ -573,21 +573,21 @@ public class Game implements Notify { //Barni
         if (currentTeam) {
             Mechanic m = (Mechanic) currentPlayer;
             if (m.setPump(i, o)) {
-                NotifyAll();
+                NotifyAllTimePassed();
                 stepUsed();
             }
         }
 
     }
     public void Skip() { //KÉSZ
-        NotifyAll();
+        NotifyAllTimePassed();
         stepUsed();
     }
 
     public void Move(Element n) {
         if(currentPlayer.MoveToElement(n)) {
             System.out.println("Move..");
-            NotifyAll();
+            NotifyAllTimePassed();
             stepUsed();
         }
 
