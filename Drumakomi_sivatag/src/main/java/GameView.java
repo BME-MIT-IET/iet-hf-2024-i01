@@ -22,7 +22,7 @@ public class GameView extends JFrame implements ActionListener {
     private int time = 5;
     private int xcord =1280;
     private int ycord =720;
-    private string hegyImage = "\\src\\main\\java\\images\\hegy.png";
+    private const String hegyImage = "\\src\\main\\java\\images\\hegy.png";
 
     static ArrayList<Image> Pipe = new ArrayList<>();
     static ArrayList<Image> Pump = new ArrayList<>();
