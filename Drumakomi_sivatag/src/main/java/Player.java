@@ -67,39 +67,56 @@ public abstract class Player implements Serializable {
      *A fuggveny meghivasakor a jatekos kivalasztja a megfelelo elemet es annak meghivja
      * Move(p: Player) fuggvenyet
     */
-    public boolean Move(int n) { //nem ezt hasznbaljuk
-        if (cantMove > 0) {
-            System.out.println("A jatekos ideje, ameg nem lephet csokkent eggyel, meg "+cantMove+" korig nem fog tudni elmozdulni.");
-            cantMove--;
-            return false;
-        }
-        ArrayList<Element> elemek = element.GetNeighbours();
-        if (n < 0 || elemek.size() <= n) {
-            System.out.println("Nem letezik ilyen szomszedja.");
-            return false;
-        } else if (elemek.get(n) != null) {
-            Element szomszed = elemek.get(n);
-            if (!szomszed.Move(this)) {
-                System.out.println("A mozgas nem engedelyezett");
-                return false;
-            } else {
-                element.Remove(this);
-                if(szomszed instanceof Pipe){
-                    if(((Pipe) szomszed).isSlippery()){
-                    }else{
-                        element = szomszed;
-                        element.SetPlayer(this);
-                    }
-                } else {
-                    element = szomszed;
-                    element.SetPlayer(this);
-                }
-                return true;
-            }
-        }
+   public boolean Move(int n) {
+    if (isMovementRestricted()) {
+        return false;
+    }
+
+    ArrayList<Element> neighbours = element.GetNeighbours();
+    if (!isValidNeighbourIndex(n, neighbours)) {
+        return false;
+    }
+
+    Element target = neighbours.get(n);
+    if (target == null || !target.Move(this)) {
         System.out.println("A mozgas nem engedelyezett");
         return false;
     }
+
+    updatePlayerPosition(target);
+    return true;
+}
+
+// Ellenőrzi, hogy a játékos mozgása korlátozott-e
+private boolean isMovementRestricted() {
+    if (cantMove > 0) {
+        System.out.println("A jatekos ideje, ameg nem lephet csokkent eggyel, meg " + cantMove + " korig nem fog tudni elmozdulni.");
+        cantMove--;
+        return true;
+    }
+    return false;
+}
+
+// Ellenőrzi, hogy a megadott szomszéd index érvényes-e
+private boolean isValidNeighbourIndex(int n, ArrayList<Element> neighbours) {
+    if (n < 0 || neighbours.size() <= n) {
+        System.out.println("Nem letezik ilyen szomszedja.");
+        return false;
+    }
+    return true;
+}
+
+// Frissíti a játékos pozícióját az új elemre
+private void updatePlayerPosition(Element target) {
+    element.Remove(this);
+    if (target instanceof Pipe && ((Pipe) target).isSlippery()) {
+        // Ha a célcső csúszós, nem állítjuk be a játékos új helyét
+        return;
+    }
+    element = target;
+    element.SetPlayer(this);
+}
+
 
     /**
      *A fuggveny meghivasakor a jatekos kivalasztja a megfelelo elemet es annak meghivja
