@@ -8,7 +8,7 @@ public class Cisterns extends Node {
      * Konstruktor
      */
     public Cisterns(){
-        //PipeSystem.getViews().put(this,new CisternsView());
+        PipeSystem.getViews().put(this,new CisternsView());
     }
 
     /**
