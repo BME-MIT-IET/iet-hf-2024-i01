@@ -16,7 +16,7 @@ public abstract class Player implements Serializable {
     /**
      * Error üzenet
      */
-    private const String notAbleToMove = "A mozgas nem engedelyezett";
+    private final String notAbleToMove = "A mozgas nem engedelyezett";
 
     /**
      * A jatekos ennyi korig nem kepes mozdulni
