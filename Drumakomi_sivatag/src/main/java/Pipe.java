@@ -5,6 +5,11 @@ import static java.lang.Math.min;
  */
 public class Pipe extends Element {
     /**
+     * Randomizer
+     */
+    private random = new Random();
+
+    /**
      * Torott a cso vagy nem
      */
     private boolean damaged=false;
@@ -57,7 +62,7 @@ public class Pipe extends Element {
                 return true;
             }
             if(slippery>0){
-                int r = new Random().nextInt(3) - 1;
+                int r = random.nextInt(3) - 1;
                 p.getElement().Remove(p);
                 p.setElement(this.GetNeighbours().get(r));
                 this.player.clear();
@@ -88,7 +93,7 @@ public class Pipe extends Element {
         if (damaged) {
             damaged = false;
             if(Game.rand){
-                notDamageable = new Random().nextInt(3) - 1;
+                notDamageable = random.nextInt(3) - 1;
             }else{notDamageable=3;}
             System.out.println("A cso meg lett javitva.");
             return true;
@@ -117,7 +122,7 @@ public class Pipe extends Element {
     public boolean SetStucky() {
         if (stucky == 0) {
             if(Game.rand){
-                stucky = new Random().nextInt( 3) - 1;
+                stucky = random.nextInt( 3) - 1;
             }else{stucky=4;}
             System.out.println("A cso ragadosra lett allitva " + stucky + " korig.");
             return true;
@@ -133,7 +138,7 @@ public class Pipe extends Element {
     public boolean SetSlippery() {
         if (slippery == 0) {
             if(Game.rand){
-                slippery = new Random().nextInt(3) ;
+                slippery = random.nextInt(3) ;
             }else{slippery=4;}
             System.out.println("A cso csuszossa lett allitva " + slippery + " korig.");
             return true;
