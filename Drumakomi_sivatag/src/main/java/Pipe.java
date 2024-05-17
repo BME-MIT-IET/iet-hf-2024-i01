@@ -152,34 +152,48 @@ public class Pipe extends Element {
      * @param e - az element ahonnan jon a viz
      */
     public void Path(Element e) {
-        System.out.println("Cso");
-        vizezett = true;
-        if (e != null){
-            if (storage < maxstorage) {
-                int kiszed = min(e.GetStorage(), maxstorage-storage);
-                e.SetStorage(e.GetStorage() - kiszed);
-                storage += kiszed;
-            }
+    System.out.println("Cso");
+    vizezett = true;
 
-            if (damaged) {
-                PipeSystem.Addswater(storage);
-                storage = 0;
-            }
-            else {
-                //Tovabbhivas
-                if (neighbours.size() >= 2) {
-                    if (neighbours.get(0) == e && neighbours.get(1)!=null)
-                        neighbours.get(1).Path(this);
-                    else if(neighbours.get(1) == e && neighbours.get(0)!=null) {
-                        neighbours.get(0).Path(this);
-                    } else if(neighbours.get(1) == null || neighbours.get(0) == null) {
-                        System.out.println("A viz a sivatagba folyik.");
-                    }
+    if (e != null) {
+        // Viz tárolása
+        storeWater(e);
 
-                }
-            }
+        // Ha a cső sérült, a víz a rendszerbe kerül
+        if (damaged) {
+            PipeSystem.Addswater(storage);
+            storage = 0;
+        } else {
+            // További hívás szomszédos elemekre
+            forwardWater(e);
         }
     }
+}
+
+// Viz tárolása az aktuális csőben
+private void storeWater(Element e) {
+    if (storage < maxstorage) {
+        int kiszed = Math.min(e.GetStorage(), maxstorage - storage);
+        e.SetStorage(e.GetStorage() - kiszed);
+        storage += kiszed;
+    }
+}
+
+// További hívás a szomszédos elemekre
+private void forwardWater(Element e) {
+    if (neighbours.size() >= 2) {
+        Element neighbour1 = neighbours.get(0);
+        Element neighbour2 = neighbours.get(1);
+
+        if (neighbour1 == e && neighbour2 != null) {
+            neighbour2.Path(this);
+        } else if (neighbour2 == e && neighbour1 != null) {
+            neighbour1.Path(this);
+        } else if (neighbour1 == null || neighbour2 == null) {
+            System.out.println("A viz a sivatagba folyik.");
+        }
+    }
+}
 
     /**
      * atkot egy csovet egy masik pumpaba.
