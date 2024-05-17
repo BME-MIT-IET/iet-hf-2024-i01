@@ -201,112 +201,160 @@ private void forwardWater(Element e) {
      * @param pump - pumpa tomb valahanyadik eleme;
      * @return Visszaadja, hogy sikeres volt-e az atkotes
      */
-    public boolean ChangePipe(Pump szomszed, Pump pump){
-
-        int neighbourIndex;
-        if (neighbours.get(0) == szomszed)
-            neighbourIndex = 0;
-        else if (neighbours.get(1) == szomszed) {
-            neighbourIndex = 1;
-        }
-        else {
-            System.out.println("Nem szomszed a cső!");
-            return false;
-        }
-
-        int pumpIndex = -2;
-        for (int i = 0; i < PipeSystem.getPumpes().size(); i++) {
-            if (PipeSystem.getPumpes().get(i) == pump) {
-                pumpIndex = i;
-                break;
-            }
-        }
-        if (pumpIndex == -2)
-            return false;
-
-
-        ///
-
-        if (pumpIndex >= PipeSystem.getPumpes().size() || pumpIndex < -1 || neighbourIndex < 0 || neighbourIndex > 1) {
-            System.out.println("A parameterekkel problema van (a tartomanyt erdemes ellenorizni)");
-            return false;
-        }
-        if (pumpIndex == -1) {
-            if (neighbourIndex == 0){ //bemenet allitasa
-                Element kimenet = neighbours.get(1);
-                Element bemenet = neighbours.get(0);
-                if (bemenet != PipeSystem.getEndpoints().get(0)) { // bemenet != hegy
-                    if (bemenet != null) {
-                        bemenet.GetNeighbours().remove(this);
-                        neighbours.clear();
-                        neighbours.add(null);
-                        neighbours.add(kimenet);
-                    } else {
-                        neighbours.clear();
-                        neighbours.add(PipeSystem.getPumpes().get(pumpIndex));
-                        neighbours.add(kimenet);
-                    }
-                } else{
-                    System.out.println("Hegybol nem lehet kikotni csovet.");
-                    return false;
-                }
-            } else { //kimenet allitasa
-                Element bemenet = neighbours.get(0);
-                Element kimenet = neighbours.get(1);
-                if (kimenet != PipeSystem.getEndpoints().get(PipeSystem.getEndpoints().size()-1)) { // kimenet != ciszterna
-                    if (kimenet != null){
-                        kimenet.GetNeighbours().remove(this);
-                        neighbours.clear();
-                        neighbours.add(bemenet);
-                        neighbours.add(null);
-                    } else {
-                        neighbours.clear();
-                        neighbours.add(PipeSystem.getPumpes().get(pumpIndex));
-                        neighbours.add(null);
-                    }
-                } else{
-                    System.out.println("Ciszternabol nem lehet kikotni csovet.");
-                    return false;
-                }
-            }
-        } else {
-            if (neighbourIndex == 0){ //bemenet allitasa
-                Element kimenet = neighbours.get(1);
-                Element bemenet = neighbours.get(0);
-                if (bemenet != PipeSystem.getEndpoints().get(0)) { // bemenet != hegy
-                    if (bemenet != null){
-                        bemenet.GetNeighbours().remove(this);
-                    }
-                    neighbours.clear();
-                    neighbours.add(PipeSystem.getPumpes().get(pumpIndex));
-                    neighbours.add(kimenet);
-                } else{
-                    System.out.println("Hegybol nem lehet kikotni csovet.");
-                    return false;
-                }
-            } else { //kimenet allitasa
-                Element bemenet = neighbours.get(0);
-                Element kimenet = neighbours.get(1);
-                if (kimenet != PipeSystem.getEndpoints().get(PipeSystem.getEndpoints().size()-1)) { // kimenet != ciszterna
-                    if (kimenet != null){
-                        kimenet.GetNeighbours().remove(this);
-                        neighbours.clear();
-                        neighbours.add(bemenet);
-                        neighbours.add(PipeSystem.getPumpes().get(pumpIndex));
-                    } else {
-                        neighbours.clear();
-                        neighbours.add(PipeSystem.getPumpes().get(pumpIndex));
-                        neighbours.add(null);
-                    }
-                } else{
-                    System.out.println("Ciszternabol nem lehet kikotni csovet.");
-                    return false;
-                }
-            }
-        }
-        System.out.println("Az atkotes sikeresen megtortent.");
-        return true;
+    public boolean ChangePipe(Pump szomszed, Pump pump) {
+    int neighbourIndex = getNeighbourIndex(szomszed);
+    if (neighbourIndex == -1) {
+        System.out.println("Nem szomszed a cső!");
+        return false;
     }
+
+    int pumpIndex = getPumpIndex(pump);
+    if (pumpIndex == -2) {
+        return false;
+    }
+
+    if (!isValidIndex(pumpIndex, neighbourIndex)) {
+        System.out.println("A parameterekkel problema van (a tartomanyt erdemes ellenorizni)");
+        return false;
+    }
+
+    if (pumpIndex == -1) {
+        if (!adjustWithoutNewPump(neighbourIndex)) {
+            return false;
+        }
+    } else {
+        if (!adjustWithNewPump(neighbourIndex, pumpIndex)) {
+            return false;
+        }
+    }
+
+    System.out.println("Az atkotes sikeresen megtortent.");
+    return true;
+}
+
+// Szomszéd indexének meghatározása
+private int getNeighbourIndex(Pump szomszed) {
+    if (neighbours.get(0) == szomszed) {
+        return 0;
+    } else if (neighbours.get(1) == szomszed) {
+        return 1;
+    } else {
+        return -1;
+    }
+}
+
+// Pumpa indexének meghatározása
+private int getPumpIndex(Pump pump) {
+    for (int i = 0; i < PipeSystem.getPumpes().size(); i++) {
+        if (PipeSystem.getPumpes().get(i) == pump) {
+            return i;
+        }
+    }
+    return -2;
+}
+
+// Indexek érvényességének ellenőrzése
+private boolean isValidIndex(int pumpIndex, int neighbourIndex) {
+    return pumpIndex >= -1 && pumpIndex < PipeSystem.getPumpes().size() && neighbourIndex >= 0 && neighbourIndex <= 1;
+}
+
+// Állítás új pumpa nélkül
+private boolean adjustWithoutNewPump(int neighbourIndex) {
+    if (neighbourIndex == 0) {
+        return setInputWithoutNewPump();
+    } else {
+        return setOutputWithoutNewPump();
+    }
+}
+
+// Bemenet állítása új pumpa nélkül
+private boolean setInputWithoutNewPump() {
+    Element kimenet = neighbours.get(1);
+    Element bemenet = neighbours.get(0);
+    if (bemenet != PipeSystem.getEndpoints().get(0)) { // bemenet != hegy
+        if (bemenet != null) {
+            bemenet.GetNeighbours().remove(this);
+            neighbours.clear();
+            neighbours.add(null);
+            neighbours.add(kimenet);
+        } else {
+            neighbours.clear();
+            neighbours.add(PipeSystem.getPumpes().get(-1));
+            neighbours.add(kimenet);
+        }
+    } else {
+        System.out.println("Hegybol nem lehet kikotni csovet.");
+        return false;
+    }
+    return true;
+}
+
+// Kimenet állítása új pumpa nélkül
+private boolean setOutputWithoutNewPump() {
+    Element bemenet = neighbours.get(0);
+    Element kimenet = neighbours.get(1);
+    if (kimenet != PipeSystem.getEndpoints().get(PipeSystem.getEndpoints().size() - 1)) { // kimenet != ciszterna
+        if (kimenet != null) {
+            kimenet.GetNeighbours().remove(this);
+            neighbours.clear();
+            neighbours.add(bemenet);
+            neighbours.add(null);
+        } else {
+            neighbours.clear();
+            neighbours.add(PipeSystem.getPumpes().get(-1));
+            neighbours.add(null);
+        }
+    } else {
+        System.out.println("Ciszternabol nem lehet kikotni csovet.");
+        return false;
+    }
+    return true;
+}
+
+// Állítás új pumpával
+private boolean adjustWithNewPump(int neighbourIndex, int pumpIndex) {
+    if (neighbourIndex == 0) {
+        return setInputWithNewPump(pumpIndex);
+    } else {
+        return setOutputWithNewPump(pumpIndex);
+    }
+}
+
+// Bemenet állítása új pumpával
+private boolean setInputWithNewPump(int pumpIndex) {
+    Element kimenet = neighbours.get(1);
+    Element bemenet = neighbours.get(0);
+    if (bemenet != PipeSystem.getEndpoints().get(0)) { // bemenet != hegy
+        if (bemenet != null) {
+            bemenet.GetNeighbours().remove(this);
+        }
+        neighbours.clear();
+        neighbours.add(PipeSystem.getPumpes().get(pumpIndex));
+        neighbours.add(kimenet);
+    } else {
+        System.out.println("Hegybol nem lehet kikotni csovet.");
+        return false;
+    }
+    return true;
+}
+
+// Kimenet állítása új pumpával
+private boolean setOutputWithNewPump(int pumpIndex) {
+    Element bemenet = neighbours.get(0);
+    Element kimenet = neighbours.get(1);
+    if (kimenet != PipeSystem.getEndpoints().get(PipeSystem.getEndpoints().size() - 1)) { // kimenet != ciszterna
+        if (kimenet != null) {
+            kimenet.GetNeighbours().remove(this);
+        }
+        neighbours.clear();
+        neighbours.add(bemenet);
+        neighbours.add(PipeSystem.getPumpes().get(pumpIndex));
+    } else {
+        System.out.println("Ciszternabol nem lehet kikotni csovet.");
+        return false;
+    }
+    return true;
+}
 
     /**
      * Csokkenti a kor vegen a bizonyos ertekeket
