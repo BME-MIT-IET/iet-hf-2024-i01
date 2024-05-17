@@ -144,8 +144,8 @@ private Image getPlayerImage() {
         if (szomszed2 instanceof CisternsView)
             jobblevag = 85;
 
-        double szelessseg = szomszed1.x_cord - szomszed2.x_cord;
-        double magassag = szomszed1.y_cord - szomszed2.y_cord;
+        double szelessseg = (double)szomszed1.x_cord - (double)szomszed2.x_cord;
+        double magassag = (double)szomszed1.y_cord - (double)szomszed2.y_cord;
 
         y_cord = szomszed1.y_cord-GameView.Pipe.get(0).getHeight(null)/2-((magassag > 0) ? (int)magassag : 0);
         x_cord = szomszed1.x_cord + baleltol;
