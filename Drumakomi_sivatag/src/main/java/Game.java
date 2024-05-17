@@ -212,7 +212,7 @@ private void processPlayerRound(Player player, String role) {
             // Ha az esemény feldolgozása sikeres, növeljük a lépésszámot és értesítünk mindenkit
             if (processEvent(player, event)) {
                 j++;
-                NotifyAll();
+                NotifyAllTimePassed();
             }
         } catch (NumberFormatException e) {
             System.out.println("Rossz parametert adtal meg");
@@ -230,7 +230,7 @@ private boolean processEvent(Player player, String[] event) {
         case "setstucky":
             return player.SetStucky();
         case "setslippery":
-            return player.SetSlippery();
+            return player.SetStucky();
         case "setpipe":
             return handleSetPipeEvent(player, event);
         case "skip":
@@ -322,6 +322,8 @@ private boolean handleSetPumpEvent(Player player, String[] event) {
 
 // A "saveandexit" parancs kezelése
 private boolean handleSaveAndExitEvent(String[] event) {
+	int j = 0;
+	int i = 0;
     if (event.length == 2 && j + 1 == steps && i + 1 == NumberOfPlayers) {
         try {
             SaveAndExit(event[1]);
@@ -355,9 +357,11 @@ private void printHelp() {
      * @param file A file amibe ment
      */
     public void SaveAndExit(String file) {
+    	FileOutputStream fileOutputStream = null;
+    	ObjectOutputStream objectOutputStream = null;
         try{
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        	fileOutputStream = new FileOutputStream(file);
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
             ArrayList<Object> list=new ArrayList<>();
             ArrayList<Integer> ints=new ArrayList<>();
             ints.add((time-1));
@@ -375,15 +379,25 @@ private void printHelp() {
             objectOutputStream.close();
         }catch (Exception e){System.err.println("Valami hiba tortent.");}
         finally{
-            fileOutputStream.close();
-            objectOutputStream.close();
+        	try
+        	{
+        		fileOutputStream.close();
+                objectOutputStream.close();
+        	}
+        	catch(Exception e)
+        	{
+        		  System.err.println("Hiba történt a fájl bezárása közben.");
+        	}
+        	
         }
     }
 
     public void Load(String file){
+    	  FileInputStream fileInputStream= null;
+          ObjectInputStream objectInputStream= null;
         try{
-            FileInputStream fileInputStream=new FileInputStream(file);
-            ObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);
+            fileInputStream=new FileInputStream(file);
+            objectInputStream=new ObjectInputStream(fileInputStream);
             ArrayList<Object> list=(ArrayList<Object>) objectInputStream.readObject();
             PipeSystem.setMechanic((ArrayList<Mechanic>) list.get(0));
             PipeSystem.setSaboteur((ArrayList<Saboteur>) list.get(1));
@@ -402,8 +416,16 @@ private void printHelp() {
             TimerNotify();
         }catch (Exception e){System.err.println("Valami hiba tortent.");}
         finally{
-            fileInputStream.close();
-            objectInputStream.close();
+        	try
+        	{
+        		fileInputStream.close();
+                objectInputStream.close();
+        	}
+        	catch(Exception e)
+        	{
+        		System.err.println("Hiba történt a fájl megnyitása közben.");
+        	}
+            
         }
     }
     /**

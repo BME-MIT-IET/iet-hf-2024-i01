@@ -288,23 +288,23 @@ private void handleSetPump() {
             int jobbx;
             int jobby;
             if (uj.GetNeighbours().get(0) == ujpump) {
-                jobbx = elements.get(uj.GetNeighbours().get(1)).x;
-                jobby = elements.get(uj.GetNeighbours().get(1)).y;
+                jobbx = elements.get(uj.GetNeighbours().get(1)).x_cord;
+                jobby = elements.get(uj.GetNeighbours().get(1)).y_cord;
             }
             else {
-                jobbx = elements.get(uj.GetNeighbours().get(0)).x;
-                jobby = elements.get(uj.GetNeighbours().get(0)).y;
+                jobbx = elements.get(uj.GetNeighbours().get(0)).x_cord;
+                jobby = elements.get(uj.GetNeighbours().get(0)).y_cord;
             }
 
             Pipe regiPipe = ((PipeView) elements.get(lastPlayerUsedCP.getElement())).model;
             int balx;
             int baly;
             if (regiPipe.GetNeighbours().get(0) == ujpump) {
-                balx = elements.get(regiPipe.GetNeighbours().get(1)).x;
-                baly = elements.get(regiPipe.GetNeighbours().get(1)).y;
+                balx = elements.get(regiPipe.GetNeighbours().get(1)).x_cord;
+                baly = elements.get(regiPipe.GetNeighbours().get(1)).y_cord;
             }  else {
-                balx = elements.get(regiPipe.GetNeighbours().get(0)).x;
-                baly = elements.get(regiPipe.GetNeighbours().get(0)).y;
+                balx = elements.get(regiPipe.GetNeighbours().get(0)).x_cord;
+                baly = elements.get(regiPipe.GetNeighbours().get(0)).y_cord;
             }
 
 

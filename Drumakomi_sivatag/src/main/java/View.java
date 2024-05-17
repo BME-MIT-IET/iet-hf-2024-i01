@@ -71,8 +71,8 @@ public class View extends JComponent implements MouseListener, MouseMotionListen
     public void mouseDragged(MouseEvent e) {
         if ((e.getModifiersEx() & e.BUTTON2_DOWN_MASK) != 0) {
             this.setLocation((e.getX() + this.getX()), (e.getY() + this.getY()));
-            x = this.getX();
-            y = this.getY();
+            x_cord = this.getX();
+            y_cord = this.getY();
             this.getParent().repaint();
         }
     }

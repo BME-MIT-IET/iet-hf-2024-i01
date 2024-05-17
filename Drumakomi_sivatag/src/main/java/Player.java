@@ -147,15 +147,6 @@ private void updatePlayerPosition(Element target) {
     return true;
 }
 
-// Ellenőrzi, hogy a játékos mozgása korlátozott-e
-private boolean isMovementRestricted() {
-    if (cantMove > 0) {
-        System.out.println("A jatekos ideje, ameg nem lephet csokkent eggyel, meg " + cantMove + " korig nem fog tudni elmozdulni.");
-        cantMove--;
-        return true;
-    }
-    return false;
-}
 
 // Ellenőrzi, hogy a megadott elem szomszédja-e az aktuális elemnek
 private boolean isNeighbour(Element n) {
@@ -166,17 +157,6 @@ private boolean isNeighbour(Element n) {
         }
     }
     return false;
-}
-
-// Frissíti a játékos pozícióját az új elemre
-private void updatePlayerPosition(Element target) {
-    element.Remove(this);
-    if (target instanceof Pipe && ((Pipe) target).isSlippery()) {
-        // Ha a célcső csúszós, nem állítjuk be a játékos új helyét
-        return;
-    }
-    element = target;
-    element.SetPlayer(this);
 }
 
     /**

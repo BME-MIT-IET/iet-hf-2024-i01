@@ -46,7 +46,8 @@ public class PipeView extends View implements EventListener {
     double szelessseg = calculateWidth(szomszedek); // Cső szélességének kiszámítása
     double magassag = calculateHeight(szomszedek); // Cső magasságának kiszámítása
 
-    drawPipe(g, current, szelessseg, magassag); // Cső kirajzolása
+    View[] neighbours = getSortedNeighbours(); 
+    drawPipe(g, current, szelessseg, magassag, neighbours);// Cső kirajzolása
 
     // Játékosok elhelyezése a csőn
     if (!model.player.isEmpty()) {
@@ -94,7 +95,7 @@ private View[] getSortedNeighbours() {
     neighbours[1] = View.getTableView().getElements().get(model.GetNeighbours().get(1));
 
     // Rendezzük a szomszédokat balról jobbra
-    if (neighbours[0].x > neighbours[1].x) {
+    if (neighbours[0].x_cord > neighbours[1].x_cord) {
         View temp = neighbours[0];
         neighbours[0] = neighbours[1];
         neighbours[1] = temp;
@@ -103,14 +104,14 @@ private View[] getSortedNeighbours() {
 }
 
 private double calculateWidth(View[] neighbours) {
-    return Math.abs(neighbours[0].x - neighbours[1].x);
+    return Math.abs(neighbours[0].x_cord - neighbours[1].x_cord);
 }
 
 private double calculateHeight(View[] neighbours) {
-    return Math.max(0, neighbours[0].y - neighbours[1].y);
+    return Math.max(0, neighbours[0].y_cord - neighbours[1].y_cord);
 }
 
-private void drawPipe(Graphics g, Image current, double width, double height) {
+private void drawPipe(Graphics g, Image current, double width, double height, View[] neighbours) {
     int baleltol = (neighbours[0] instanceof MountainsView) ? 73 : 41;
     int jobblevag = (neighbours[1] instanceof CisternsView) ? 85 : 41;
     g.drawImage(current, 0, 0, (int) width - jobblevag - baleltol, current.getHeight(null), null);
@@ -130,7 +131,7 @@ private Image getPlayerImage() {
         View szomszed2 = View.getTableView().getElements().get(model.GetNeighbours().get(1));
 
         //Rendezzük, hogy 1 legyen baloldalt
-        if (szomszed1.x > szomszed2.x) {
+        if (szomszed1.x_cord > szomszed2.x_cord) {
             var temp = szomszed1;
             szomszed1 = szomszed2;
             szomszed2 = temp;
@@ -143,12 +144,12 @@ private Image getPlayerImage() {
         if (szomszed2 instanceof CisternsView)
             jobblevag = 85;
 
-        double szelessseg = szomszed1.x - szomszed2.x;
-        double magassag = szomszed1.y - szomszed2.y;
+        double szelessseg = szomszed1.x_cord - szomszed2.x_cord;
+        double magassag = szomszed1.y_cord - szomszed2.y_cord;
 
-        y = szomszed1.y-GameView.Pipe.get(0).getHeight(null)/2-((magassag > 0) ? (int)magassag : 0);
-        x = szomszed1.x + baleltol;
-        this.setBounds(x, y, (int)abs(szelessseg)-jobblevag-baleltol, /*GameView.Pipe.get(0).getWidth(null)*/ (int)abs(magassag)+(int)(GameView.Pipe.get(0).getHeight(null)*1.2));
+        y_cord = szomszed1.y_cord-GameView.Pipe.get(0).getHeight(null)/2-((magassag > 0) ? (int)magassag : 0);
+        x_cord = szomszed1.x_cord + baleltol;
+        this.setBounds(x_cord, y_cord, (int)abs(szelessseg)-jobblevag-baleltol, /*GameView.Pipe.get(0).getWidth(null)*/ (int)abs(magassag)+(int)(GameView.Pipe.get(0).getHeight(null)*1.2));
 
     }
 
