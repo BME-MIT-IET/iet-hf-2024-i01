@@ -134,7 +134,7 @@ private void updatePlayerPosition(Element target) {
     }
 
     if (!isNeighbour(n)) {
-        System.out.println("Nem letezik ilyen szomszedja.");
+        //System.out.println("Nem letezik ilyen szomszedja.");
         return false;
     }
 

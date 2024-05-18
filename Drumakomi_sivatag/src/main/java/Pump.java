@@ -75,7 +75,7 @@ public class Pump extends Node {
             return;
         }
         vizezett = true;
-        System.out.println("Pumpa");
+        //System.out.println("Pumpa");
         counter ++;
         if (counter >=10){
             return;
@@ -106,7 +106,7 @@ public class Pump extends Node {
             System.out.println("A pumpa meg lett javitva");
             broken = false;
         }else{
-            System.out.println("A pumpa nem is volt elromolva");
+            //System.out.println("A pumpa nem is volt elromolva");
         }
         return true;
     }

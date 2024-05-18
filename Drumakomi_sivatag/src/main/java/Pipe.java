@@ -37,6 +37,11 @@ public class Pipe extends Element {
      * Hany korig nem rongalhato a cso
      */
     private int notDamageable = 0;
+
+    public int getStucky() {
+        return stucky;
+    }
+
     /**
      * Hany korig ragados a cso
      */
@@ -111,7 +116,7 @@ public class Pipe extends Element {
             if(Game.rand){
                 notDamageable = random.nextInt(3) - 1;
             }else{notDamageable=3;}
-            System.out.println("A cso meg lett javitva.");
+            //System.out.println("A cso meg lett javitva.");
             return true;
         }
         System.out.println("A cso nem is volt elromolva, ezert nem lehetett megjavitani.");
@@ -127,7 +132,7 @@ public class Pipe extends Element {
             System.out.println("A cso sikeresen meg lett rongolva.");
             return true;
         }
-        System.out.println("A csot nem lehet megrongalni.");
+        //System.out.println("A csot nem lehet megrongalni.");
         return false;
     }
 
@@ -140,7 +145,7 @@ public class Pipe extends Element {
             if(Game.rand){
                 stucky = random.nextInt( 3) - 1;
             }else{stucky=4;}
-            System.out.println("A cso ragadosra lett allitva " + stucky + " korig.");
+            //System.out.println("A cso ragadosra lett allitva " + stucky + " korig.");
             return true;
         }
         System.out.println("A muvelet nem vegezgeto el, mert a cso mar ragados.");
@@ -156,7 +161,7 @@ public class Pipe extends Element {
             if(Game.rand){
                 slippery = random.nextInt(3) ;
             }else{slippery=4;}
-            System.out.println("A cso csuszossa lett allitva " + slippery + " korig.");
+            //System.out.println("A cso csuszossa lett allitva " + slippery + " korig.");
             return true;
         }
         System.out.println("A cso mar csuszos, ezert nem lehet duplan csuszossa tenni.");
