@@ -1,13 +1,22 @@
+
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# ignore target from Maven
 target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
 ### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -32,6 +41,9 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
+*.classpath
+*.project
+.settings/
 .vscode/
 
 ### Mac OS ###
@@ -39,3 +51,4 @@ build/
 
 ### Vagrant ###
 .vagrant/
+
