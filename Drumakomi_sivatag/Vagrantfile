@@ -1,27 +1,46 @@
+# Define the state file
+STATE_FILE = ".vagrant-java-started"
+
+# Configure the Vagrant environment
 Vagrant.configure("2") do |config|
   config.vm.box = "generic/ubuntu2004"
   
+  # Set the VM parameters
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "2048"
     vb.cpus = 2
   end
 
+  # Set the VM hostname and IP address
   config.vm.network "private_network", ip: "192.168.1.2"
 
+  # Provision the VM with Java and X11
   config.vm.provision "shell", inline: <<-SHELL
-    sudo apt-get update
-    sudo apt-get install -y default-jdk xauth
+    # Check if the state file exists
+    if [ ! -f #{STATE_FILE} ]; then
+      # If not, provision the VM
+      sudo apt-get update
+      sudo apt-get install -y default-jdk xauth
+
+      # Mark the state file as provisioned
+      touch #{STATE_FILE}
+    fi
   SHELL
 
-  config.vm.provision "file", source: "./src/main/java", destination: "/home/vagrant/myapp"
+  # Copy Java source files to /home/vagrant/drukmakori
+  config.vm.provision "file", source: "./src/main/java", destination: "/home/vagrant/drukmakori"
+
+  # Copy the check-and-start-java.sh script to /home/vagrant
+  config.vm.provision "file", source: "./check-and-start-java.sh", destination: "/home/vagrant/check-and-start-java.sh"
+
+  # Ensure the script is executable
+  config.vm.provision "shell", inline: "chmod +x /home/vagrant/check-and-start-java.sh"
+
+  # Forward X11
   config.ssh.forward_x11 = true
 
+  # Start Java on login
   config.vm.provision "shell", inline: <<-SHELL
-    echo "if [[ -z \\"$DISPLAY\\" && \\"${SSH_CONNECTION}\\" ]]; then
-      export DISPLAY=\$(echo \$SSH_CONNECTION | cut -d ' ' -f 1):0.0
-      cd /home/vagrant/myapp
-      javac *.java
-      java -cp . Main &
-    fi" >> /home/vagrant/.bash_profile
+    echo "bash /home/vagrant/check-and-start-java.sh" >> /home/vagrant/.bashrc
   SHELL
 end
