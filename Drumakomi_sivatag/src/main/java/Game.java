@@ -54,7 +54,6 @@ public class Game implements Notify { // Barni
     boolean currentTeam = false; // False: Szabotőr, True: Mechanic
     Player currentPlayer; // Az éppen aktív csapaton belül a já
     boolean ended = false; // Ha true: vége a játéknak
-
     //
     public Game(int t, int s, int np) {
         time = t;

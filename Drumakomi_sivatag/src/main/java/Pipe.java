@@ -57,7 +57,7 @@ public class Pipe extends Element {
                 return true;
             }
             if(slippery>0){
-                int r = new Random().nextInt(3) - 1;
+                int r = new Random().nextInt(2);
                 p.getElement().Remove(p);
                 p.setElement(this.GetNeighbours().get(r));
                 this.player.clear();
@@ -88,7 +88,7 @@ public class Pipe extends Element {
         if (damaged) {
             damaged = false;
             if(Game.rand){
-                notDamageable = new Random().nextInt(3) - 1;
+                notDamageable = new Random().nextInt(2);
             }else{notDamageable=3;}
             System.out.println("A cso meg lett javitva.");
             return true;
@@ -117,7 +117,7 @@ public class Pipe extends Element {
     public boolean SetStucky() {
         if (stucky == 0) {
             if(Game.rand){
-                stucky = new Random().nextInt( 3) - 1;
+                stucky = new Random().nextInt( 2);
             }else{stucky=4;}
             System.out.println("A cso ragadosra lett allitva " + stucky + " korig.");
             return true;
@@ -133,7 +133,7 @@ public class Pipe extends Element {
     public boolean SetSlippery() {
         if (slippery == 0) {
             if(Game.rand){
-                slippery = new Random().nextInt(3) ;
+                slippery = new Random().nextInt(2);
             }else{slippery=4;}
             System.out.println("A cso csuszossa lett allitva " + slippery + " korig.");
             return true;
@@ -194,7 +194,6 @@ public class Pipe extends Element {
             System.out.println("Nem szomszed a cső!");
             return false;
         }
-
         int pumpIndex = -2;
         for (int i = 0; i < PipeSystem.getPumpes().size(); i++) {
             if (PipeSystem.getPumpes().get(i) == pump) {
@@ -204,7 +203,6 @@ public class Pipe extends Element {
         }
         if (pumpIndex == -2)
             return false;
-
 
         ///
 
@@ -326,7 +324,7 @@ public class Pipe extends Element {
             Pump newPump = new Pump();
             Pipe newPipe = new Pipe();
 
-            regiPumpa2.neighbours.remove(this); //regi cso remove hegybol
+            regiPumpa2.GetNeighbours().remove(this); //regi cso remove hegybol
             this.neighbours.remove(regiPumpa2); // eredeti cso kimenetenek a beallitasa
             this.neighbours.add(newPump);
             newPump.SetNeighbour(this);
@@ -344,5 +342,20 @@ public class Pipe extends Element {
         }
         System.out.println("Nincs nalad pumpa ahhoz, hogy a csovet ketto tudd fureszelni");
         return false;
+    }
+
+    //For tests
+    public void AddPlayer(Player p){
+        player.add(p);
+    }
+
+    public void SetStuckyValue(int newValue){
+        stucky = newValue;
+    }
+    public void SetSlipperyValue(int newValue){
+        slippery = newValue;
+    }
+    public void SetNotDamageable(int newValue){
+        notDamageable = newValue;
     }
 }
