@@ -1,0 +1,7 @@
+Manual testing and exploratory testing are crucial for ensuring the quality and reliability of our Java game. By manually testing the game, we were able to simulate real user interactions and identify potential issues that automated tests might miss. This hands-on approach allowed us to thoroughly evaluate the game's functionality, usability, and performance.
+
+Through manual testing, we were able to uncover bugs and glitches that could have negatively impacted the player's experience. By actively exploring different scenarios and user paths, we identified edge cases and unexpected behaviors that needed to be addressed. This helped us gain a deeper understanding of the game's behavior and potential issues.
+
+Additionally, manual testing provided valuable feedback on the game's user interface, controls, and overall gameplay. By immersing ourselves in the game as end-users, we gained insights into how players might interact with the game and what improvements could be made to enhance their experience.
+
+Overall, manual testing and exploratory testing played a vital role in identifying bugs, understanding the game's behavior, and providing valuable feedback for improving the game's quality.

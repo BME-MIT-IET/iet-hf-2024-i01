@@ -20,8 +20,9 @@ public class GameView extends JFrame implements ActionListener {
     private int players = 2;
     private int steps = 3;
     private int time = 5;
-    private int x=1280;
-    private int y=720;
+    private int xcord =1280;
+    private int ycord =720;
+    private final static String HEGYIMAGE = "//src//main//java//images//hegy.png";
 
     static ArrayList<Image> Pipe = new ArrayList<>();
     static ArrayList<Image> Pump = new ArrayList<>();
@@ -33,33 +34,33 @@ public class GameView extends JFrame implements ActionListener {
 
     static {
         try {
-            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\csovek\\cso.png").getImage());
-            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\csovek\\csuszosCso.png").getImage());
-            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\csovek\\csuszosRagadosCso.png").getImage());
-            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\csovek\\CsuszosRagadosTorottCso.png").getImage());
-            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\csovek\\csuszosRagadosTorottVizesCso.png").getImage());
-            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\csovek\\csuszosRagadosVizesCso.png").getImage());
-            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\csovek\\csuszosTorottCso.png").getImage());
-            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\csovek\\csuszosTorottVizescso.png").getImage());
-            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\csovek\\csuszosVizesCso.png").getImage());
-            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\csovek\\ragadosCso.png").getImage());
-            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\csovek\\ragadosTorottcso.png").getImage());
-            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\csovek\\ragadosTorottVizesCso.png").getImage());
-            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\csovek\\ragadosVizesCso.png").getImage());
-            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\csovek\\torottCso.png").getImage());
-            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\csovek\\torottVizesCso.png").getImage());
-            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\csovek\\vizescso.png").getImage());
+            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//csovek//cso.png").getImage());
+            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//csovek//csuszosCso.png").getImage());
+            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//csovek//csuszosRagadosCso.png").getImage());
+            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//csovek//CsuszosRagadosTorottCso.png").getImage());
+            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//csovek//csuszosRagadosTorottVizesCso.png").getImage());
+            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//csovek//csuszosRagadosVizesCso.png").getImage());
+            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//csovek//csuszosTorottCso.png").getImage());
+            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//csovek//csuszosTorottVizescso.png").getImage());
+            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//csovek//csuszosVizesCso.png").getImage());
+            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//csovek//ragadosCso.png").getImage());
+            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//csovek//ragadosTorottcso.png").getImage());
+            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//csovek//ragadosTorottVizesCso.png").getImage());
+            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//csovek//ragadosVizesCso.png").getImage());
+            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//csovek//torottCso.png").getImage());
+            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//csovek//torottVizesCso.png").getImage());
+            Pipe.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//csovek//vizescso.png").getImage());
 
-            Pump.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\pumpak\\pumpa.png").getImage());
-            Pump.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\pumpak\\destroyedpumpa.png").getImage());
-            Pump.add(new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\pumpak\\vizesPumpa.png").getImage());
+            Pump.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//pumpak//pumpa.png").getImage());
+            Pump.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//pumpak//destroyedpumpa.png").getImage());
+            Pump.add(new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//pumpak//vizesPumpa.png").getImage());
 
-            ciszterna = new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\ciszterna.png").getImage();
-            hegy = new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\hegy.png").getImage();
-            gameBackground = (new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\gameBG.png").getImage());
+            ciszterna = new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//ciszterna.png").getImage();
+            hegy = new ImageIcon(new File(".").getCanonicalPath() + HEGYIMAGE).getImage();
+            gameBackground = (new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//gameBG.png").getImage());
 
-            szerelo = new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\szerelo.png").getImage();
-            szabotor = new ImageIcon(new File(".").getCanonicalPath() + "\\src\\main\\java\\images\\szabotor.png").getImage();
+            szerelo = new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//szerelo.png").getImage();
+            szabotor = new ImageIcon(new File(".").getCanonicalPath() + "//src//main//java//images//szabotor.png").getImage();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -69,10 +70,10 @@ public class GameView extends JFrame implements ActionListener {
         super();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Csohalozat");
-        this.setSize(x, y);
+        this.setSize(xcord, ycord);
         try {
-            this.setIconImage(new ImageIcon(new java.io.File(".").getCanonicalPath() + "\\src\\main\\java\\images\\hegy.png").getImage());
-            Image img = new ImageIcon(new java.io.File(".").getCanonicalPath() + "\\src\\main\\java\\images\\bg.png").getImage();
+            this.setIconImage(new ImageIcon(new java.io.File(".").getCanonicalPath() + HEGYIMAGE).getImage());
+            Image img = new ImageIcon(new java.io.File(".").getCanonicalPath() + "//src//main//java//images//bg.png").getImage();
             menu = new JPanel(null) {
                 public void paintComponent(Graphics g) {
                     super.paintComponent(g);
@@ -89,7 +90,7 @@ public class GameView extends JFrame implements ActionListener {
 
         menu.add(start);
         menu.setVisible(true);
-        menu.setBounds(0, 0, x, y);
+        menu.setBounds(0, 0, xcord, ycord);
 
         this.add(menu);
         this.setResizable(false);
@@ -101,8 +102,8 @@ public class GameView extends JFrame implements ActionListener {
         this.repaint();
         try {
             String path = new java.io.File(".").getCanonicalPath();
-            this.setIconImage(new ImageIcon(path + "\\src\\main\\java\\images\\hegy.png").getImage());
-            Image img = new ImageIcon(path + "\\src\\main\\java\\images\\bg.png").getImage();
+            this.setIconImage(new ImageIcon(path + HEGYIMAGE).getImage());
+            Image img = new ImageIcon(path + "//src//main//java//images//bg.png").getImage();
             settings = new JPanel(new GridLayout(4, 2));
         }
             catch (IOException e) {
@@ -110,7 +111,7 @@ public class GameView extends JFrame implements ActionListener {
         }
 
         settings.setVisible(true);
-        settings.setBounds((1280-x/2)/2, (720-y/2)/2, x/2, y/2);
+        settings.setBounds((1280-xcord/2)/2, (720-ycord/2)/2, xcord/2, ycord/2);
         JLabel player = new JLabel("Set player number: ");
         player.setBounds(0, 0, 640, 180);
         playerField = new JTextField("");

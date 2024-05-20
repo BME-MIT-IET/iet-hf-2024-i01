@@ -11,17 +11,17 @@ public class View extends JComponent implements MouseListener, MouseMotionListen
     public static TableView getTableView() {return table;}
     public static void setTableView(TableView t) {View.table = t;}
 
-    protected int x;
-    protected int y;
+    protected int x_cord;
+    protected int y_cord;
 
     Element element;
-    Game game;
+    transient Game game;
 
     public View() {}
     public View(int _x, int _y, Element el, Game g) {
         this.setVisible(true);
-        x = _x;
-        y = _y;
+        x_cord = _x;
+        y_cord = _y;
         element = el;
         game = g;
        this.addMouseListener(this);
@@ -39,8 +39,8 @@ public class View extends JComponent implements MouseListener, MouseMotionListen
         if (e.getButton() == MouseEvent.BUTTON1 && View.table.getState() == 0)
             game.Move(element);
         if(e.getButton() == MouseEvent.BUTTON2){
-            x=e.getX();
-            y=e.getY();
+            x_cord=e.getX();
+            y_cord=e.getY();
         }
         this.getParent().repaint();
         if (game.getEnded()) {
@@ -50,35 +50,35 @@ public class View extends JComponent implements MouseListener, MouseMotionListen
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        //unused method
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        //unused method
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        //unused method
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        //unused method
     }
     @Override
     public void mouseDragged(MouseEvent e) {
         if ((e.getModifiersEx() & e.BUTTON2_DOWN_MASK) != 0) {
             this.setLocation((e.getX() + this.getX()), (e.getY() + this.getY()));
-            x = this.getX();
-            y = this.getY();
+            x_cord = this.getX();
+            y_cord = this.getY();
             this.getParent().repaint();
         }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        //unused method
     }
 }

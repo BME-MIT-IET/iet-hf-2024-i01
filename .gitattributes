@@ -1,0 +1,6 @@
+# Beállítás Windows-specifikus sortörésekhez
+*.txt text eol=crlf
+*.java text eol=crlf
+
+# Beállítás Unix/Linux-specifikus sortörésekhez
+*.sh text eol=lf

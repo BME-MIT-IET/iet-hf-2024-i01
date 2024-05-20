@@ -92,7 +92,7 @@ public class Game implements Notify { //Barni
      * @param pugt A pumpa generalas  ideje
      * @param pigt A cso generalas ideje
      */
-    public void Settings(int pugt,int pigt){
+    public static void Settings(int pugt,int pigt){
         PumpGenTime=pugt;
         PipeGenTime=pigt;
         rand = false;
@@ -179,232 +179,187 @@ public class Game implements Notify { //Barni
      * A szabotorok es szerelok egy-egy koret szimulalja, es ha lejart az ido akkor befejezi a jatekot
      */
     public void Round() {
-        for(int i=0;i<NumberOfPlayers;i++){
-            System.out.println("_________________________________________________________________________");
-            int j=0;
-            Saboteur s=PipeSystem.getSaboteur().get(i);
-            System.out.println("Az "+s.getId()+" id-ju Szabotor kore van eppen!");
-            while(j<steps){
-                String[] event=sc.nextLine().toLowerCase().split(" ");
-                try {
-                    switch (event[0]) {
-                        case "damage":
-                            if (s.getElement().Damage()) {
-                                j++;
-                                NotifyAll();
-                            }
-                            break;
-                        case "move":
-                            if (event.length == 2) {
-                                if (s.Move(Integer.parseInt(event[1]))) {
-                                    j++;
-                                    NotifyAll();
-                                }
-                            } else {
-                                System.out.println("Keves parametert adtal meg! A masodik parameterben meg kell adni a szomszed indexet.");
-                            }
-                            break;
-                        case "setstucky":
-                            if (s.SetStucky()) {
-                                j++;
-                                NotifyAll();
-                            }
-                            break;
-                        case "setslippery":
-                            if (s.SetSlippery()) {
-                                j++;
-                                NotifyAll();
-                            }
-                            break;
-                        case "setpipe":
-                            if (event.length == 3) {
-                                /*if (s.getElement().ChangePipe(Integer.parseInt(event[1]), Integer.parseInt(event[2]))) {
-                                    j++;
-                                    NotifyAll();
-                                }*/
-                            } else {
-                                System.out.println("Tul keves parameter lett megadva.");
-                            }
-                            break;
-                        case "skip":
-                            j++;
-                            NotifyAll();
-                            break;
-                        case "help":
-                            System.out.println("A kovetkezo parancsokat tudod kiadni:");
-                            System.out.println("Damage - Eltorod a pumpat, amin allsz, ha az pumpa.");
-                            System.out.println("Move - A parameterben megadott indexu szomszedra lepsz, ha az lehetseges.");
-                            System.out.println("SetStucky - Ragadossa teszed a csovet, amin allsz, ha csovon allsz.");
-                            System.out.println("SetSlippery - Csuszossa teszed a csovet, amin allsz, ha csovon allsz.");
-                            System.out.println("SetPipe - Atkotod a csovet,az elso parameterben kell megadni, hogy az inputjat(0) vagy outputjat(1) akarok atkotni a masik parameterben pedig, hogy a rendszerben levo pumpak kozul hanyadikba (pl. 0, ha a legeloszor felvett pumpaba).");
-                            System.out.println("Skip - Skippeled az egyik lepesi lehetosegedet.");
-                            System.out.println("Info - Kiirja az elem adatait amin allsz.");
-                            System.out.println("Info - Kiirja a parameterben megadott elem adatait.");
-                            System.out.println("Settings - Az elso parameterben meg kell adni, hogy a random dolgok random tortenjenek-e off, ha nem, illetve on ha igen a masodik parameterben a pumpa generalasanak az idejet kell megadni a ciszternanal, a harmadikban pedig a cso generalasanak idejet a ciszternanal ");
-                            break;
-                        case "info":
-                            if (event.length == 1) {
-                                s.Info();
-                            }
-                            if (event.length == 2) {
-                                s.Info(Integer.parseInt(event[1]));
-                            }
-                            break;
-                        case "settings":
-                            if (event.length == 4) {
-                                Settings(Integer.parseInt(event[2]), Integer.parseInt(event[3]));
-                            } else {
-                                System.out.println("Tul keves parameter lett megadva.");
-                            }
-                            break;
-                        case "exit":
-                            System.exit(0);
-                        default:
-                            System.out.println("Hibas a megadott parancs! A Help parancsal tudod a parancsok listajat kilistazni.");
-                            break;
-                    }
-                }catch (NumberFormatException e){System.out.println("Rossz parametert adtal meg");}
+    // Végigmegyünk az összes játékoson, és feldolgozzuk a körüket mint Szabotőr
+    for (int i = 0; i < NumberOfPlayers; i++) {
+        processPlayerRound(PipeSystem.getSaboteur().get(i), "Saboteur");
+    }
+
+    // Végigmegyünk az összes játékoson, és feldolgozzuk a körüket mint Szerelő
+    for (int i = 0; i < NumberOfPlayers; i++) {
+        processPlayerRound(PipeSystem.getMechanic().get(i), "Mechanic");
+    }
+
+    // Csökkentjük az időt és növeljük a kör idejét
+    time--;
+    roundtime++;
+    System.out.println("A " + roundtime + " korben vagyunk eppen");
+
+    // Értesítjük az összes csövet, hogy az időzítő lejárt
+    for (Pipe pipe : PipeSystem.getPipes()) {
+        pipe.TimerNotify();
+    }
+}
+
+// Egy játékos körének feldolgozása
+private void processPlayerRound(Player player, String role) {
+    System.out.println("_________________________________________________________________________");
+    System.out.println("Az " + player.getId() + " id-ju " + role + " kore van eppen!");
+
+    // A játékos lépéseit feldolgozzuk
+    for (int j = 0; j < steps; ) {
+        String[] event = sc.nextLine().toLowerCase().split(" ");
+        try {
+            // Ha az esemény feldolgozása sikeres, növeljük a lépésszámot és értesítünk mindenkit
+            if (processEvent(player, event)) {
+                j++;
+                NotifyAllTimePassed();
             }
-        }
-        for(int i=0;i<NumberOfPlayers;i++){
-            System.out.println("_________________________________________________________________________");
-            int j=0;
-            Mechanic m=PipeSystem.getMechanic().get(i);
-            System.out.println("Az "+m.getId()+" id-ju Mechanic kore van eppen!");
-            while(j<steps){
-                String[] event=sc.nextLine().toLowerCase().split(" ");
-                try {
-                    switch (event[0]) {
-                        case "damage":
-                            if (m.getElement().Damage()) {
-                                j++;
-                                NotifyAll();
-                            }
-                            break;
-                        case "move":
-                            if (event.length == 2) {
-                                if (m.Move(Integer.parseInt(event[1]))) {
-                                    j++;
-                                    NotifyAll();
-                                }
-                            } else {
-                                System.out.println("Keves parametert adtal meg! A masodik parameterben meg kell adni a szomszed indexet.");
-                            }
-                            break;
-                        case "repair":
-                            if (m.Repair()) {
-                                j++;
-                                NotifyAll();
-                            }
-                            break;
-                        case "pickuppump":
-                            if (m.Pickuppump()) {
-                                j++;
-                                NotifyAll();
-                            }
-                            break;
-                        case "cutpipe":
-                            if (m.CutPipe()) {
-                                j++;
-                                NotifyAll();
-                            }
-                            break;
-                        case "setstucky":
-                            if (m.SetStucky()) {
-                                j++;
-                                NotifyAll();
-                            }
-                            break;
-                        case "setpump":
-                            /*if (m.setPump(Integer.parseInt(event[1]), Integer.parseInt(event[2]))) {
-                                j++;
-                                NotifyAll();
-                            }*/
-                            break;
-                        case "setpipe":
-//                            if (event.length == 3) {
-//                                if (m.getElement().ChangePipe(Integer.parseInt(event[1]), Integer.parseInt(event[2]))) {
-//                                    j++;
-//                                    NotifyAll();
-//                                }
-//                            } else {
-//                                System.out.println("Tul keves parameter lett megadva.");
-//                            }
-                            break;
-                        case "exit":
-                            System.exit(0);
-                        case "skip":
-                            j++;
-                            NotifyAll();
-                            break;
-                        case "help":
-                            System.out.println("A kovetkezo parancsokat tudod kiadni:");
-                            System.out.println("Damage - Eltorod a pumpat, amin allsz, ha az pumpa.");
-                            System.out.println("Move - A parameterben megadott indexu szomszedra lepsz, ha az lehetseges.");
-                            System.out.println("SetStucky - Ragadossa teszed a csovet, amin allsz, ha csovon allsz.");
-                            System.out.println("RepairPump - Megjavitod az elemet amin allsz.");
-                            System.out.println("PickupPump - A ciszernarol felveszel egy pumpat, ha van rajta es te a ciszternan allsz.");
-                            System.out.println("CutPipe - Kettefureszeled a csovet, amin allsz, ha csovon allsz es ha van nalad legalabb egy pumpa.");
-                            System.out.println("SetPump - Az elso parameterben a pumpa inputjat kell megadni(hanyas indexu szomszed legyen az input), a masodik parameterben az outputot(hanyas indexu szomszed legyen az output)");
-                            System.out.println("SetPipe - Atkotod a csovet,az elso parameterben kell megadni, hogy az inputjat(0) vagy outputjat(1) akarok atkotni a masik parameterben pedig, hogy a rendszerben levo pumpak kozul hanyadikba (pl. 0, ha a legeloszor felvett pumpaba).");
-                            System.out.println("Skip - Skippeled az egyik lepesi lehetosegedet.");
-                            System.out.println("Info - Kiirja az elem adatait amin allsz.");
-                            System.out.println("Info - Kiirja a parameterben megadott elem adatait.");
-                            System.out.println("Settings - Az elso parameterben meg kell adni, hogy a random dolgok random tortenjenek-e off, ha nem, illetve on ha igen a masodik parameterben a pumpa generalasanak az idejet kell megadni a ciszternanal, a harmadikban pedig a cso generalasanak idejet a ciszternanal ");
-                            System.out.println("SaveAndExit - Elmenti a jatekot, ha az utolso szabotor utolso lepesekent a mentest valasztja");
-                            break;
-                        case "info":
-                            if (event.length == 1) {
-                                m.Info();
-                            }
-                            if (event.length == 2) {
-                                m.Info(Integer.parseInt(event[1]));
-                            }
-                            break;
-                        case "settings":
-                            if (event.length == 4) {
-                                Settings(Integer.parseInt(event[2]), Integer.parseInt(event[3]));
-                            } else {
-                                System.out.println("Tul keves parameter lett megadva.");
-                            }
-                            break;
-                        case "saveandexit":
-                            if(event.length==2) {
-                                if (j + 1 == steps && i + 1 == NumberOfPlayers) {
-                                    try {
-                                        SaveAndExit(event[1]);
-                                        System.exit(0);
-                                    } catch (Exception e) {
-                                        System.out.println("Valami hiba tortent");
-                                    }
-                                } else {
-                                    System.out.println("Ez a muvelet most nem lehetseges");
-                                }
-                            }else{System.out.println("Tul keves parameter lett megadva.");}
-                            break;
-                        default:
-                            System.out.println("Hibas a megadott parancs! A Help parancsal tudod a parancsok listajat kilistazni.");
-                            break;
-                    }
-                }catch (NumberFormatException e){System.out.println("Rossz parametert adtal meg");}
-            }
-        }
-        time--;
-        roundtime++;
-        System.out.println("A "+roundtime+" korben vagyunk eppen");
-        for(int i=0;i<PipeSystem.getPipes().size();i++){
-            PipeSystem.getPipes().get(i).TimerNotify();
+        } catch (NumberFormatException e) {
+            System.out.println("Rossz parametert adtal meg");
         }
     }
+}
+
+// Esemény feldolgozása
+private boolean processEvent(Player player, String[] event) {
+    switch (event[0]) {
+        case "damage":
+            return player.getElement().Damage();
+        case "move":
+            return handleMoveEvent(player, event);
+        case "setstucky":
+            return player.SetStucky();
+        case "setslippery":
+            return player.SetStucky();
+        case "setpipe":
+            return handleSetPipeEvent(player, event);
+        case "skip":
+            return true;
+        case "help":
+            printHelp();
+            return false;
+        case "info":
+            handleInfoEvent(player, event);
+            return false;
+        case "settings":
+            handleSettingsEvent(event);
+            return false;
+        case "exit":
+            System.exit(0);
+            return false;
+        case "repair":
+            if (player instanceof Mechanic) {
+                return ((Mechanic) player).Repair();
+            }
+            return false;
+        case "pickuppump":
+            if (player instanceof Mechanic) {
+                return ((Mechanic) player).Pickuppump();
+            }
+            return false;
+        case "cutpipe":
+            if (player instanceof Mechanic) {
+                return ((Mechanic) player).CutPipe();
+            }
+            return false;
+        case "setpump":
+            return handleSetPumpEvent(player, event);
+        case "saveandexit":
+            return handleSaveAndExitEvent(event);
+        default:
+            System.out.println("Hibas a megadott parancs! A Help parancsal tudod a parancsok listajat kilistazni.");
+            return false;
+    }
+}
+
+// A "move" parancs kezelése
+private boolean handleMoveEvent(Player player, String[] event) {
+    if (event.length == 2) {
+        return player.Move(Integer.parseInt(event[1]));
+    } else {
+        System.out.println("Keves parametert adtal meg! A masodik parameterben meg kell adni a szomszed indexet.");
+        return false;
+    }
+}
+
+// A "setpipe" parancs kezelése
+private boolean handleSetPipeEvent(Player player, String[] event) {
+    if (event.length == 3) {
+        // Itt implementáld a logikát a cső átállításához
+        // Ha a ChangePipe metódus implementálva van, a következő sort oldd fel
+        // return player.getElement().ChangePipe(Integer.parseInt(event[1]), Integer.parseInt(event[2]));
+    } else {
+        System.out.println("Tul keves parameter lett megadva.");
+    }
+    return false;
+}
+
+// Az "info" parancs kezelése
+private void handleInfoEvent(Player player, String[] event) {
+    if (event.length == 1) {
+        player.Info();
+    } else if (event.length == 2) {
+        player.Info(Integer.parseInt(event[1]));
+    }
+}
+
+// A "settings" parancs kezelése
+private void handleSettingsEvent(String[] event) {
+    if (event.length == 4) {
+        Settings(Integer.parseInt(event[2]), Integer.parseInt(event[3]));
+    } else {
+        System.out.println("Tul keves parameter lett megadva.");
+    }
+}
+
+// A "setpump" parancs kezelése
+private boolean handleSetPumpEvent(Player player, String[] event) {
+    if (player instanceof Mechanic) {
+        // Ha szükséges, oldd fel és implementáld a setPump logikát
+        // return ((Mechanic) player).setPump(Integer.parseInt(event[1]), Integer.parseInt(event[2]));
+    }
+    return false;
+}
+
+// A "saveandexit" parancs kezelése
+private boolean handleSaveAndExitEvent(String[] event) {
+	int j = 0;
+	int i = 0;
+    if (event.length == 2 && j + 1 == steps && i + 1 == NumberOfPlayers) {
+        try {
+            SaveAndExit(event[1]);
+            System.exit(0);
+        } catch (Exception e) {
+            System.out.println("Valami hiba tortent");
+        }
+    } else {
+        System.out.println("Ez a muvelet most nem lehetseges");
+    }
+    return false;
+}
+
+// A segítség (help) parancs kinyomtatása
+private void printHelp() {
+    System.out.println("A kovetkezo parancsokat tudod kiadni:");
+    System.out.println("Damage - Eltorod a pumpat, amin allsz, ha az pumpa.");
+    System.out.println("Move - A parameterben megadott indexu szomszedra lepsz, ha az lehetseges.");
+    System.out.println("SetStucky - Ragadossa teszed a csovet, amin allsz, ha csovon allsz.");
+    System.out.println("SetSlippery - Csuszossa teszed a csovet, amin allsz, ha csovon allsz.");
+    System.out.println("SetPipe - Atkotod a csovet, az elso parameterben kell megadni, hogy az inputjat(0) vagy outputjat(1) akarok atkotni a masik parameterben pedig, hogy a rendszerben levo pumpak kozul hanyadikba (pl. 0, ha a legeloszor felvett pumpaba).");
+    System.out.println("Skip - Skippeled az egyik lepesi lehetosegedet.");
+    System.out.println("Info - Kiirja az elem adatait amin allsz.");
+    System.out.println("Info - Kiirja a parameterben megadott elem adatait.");
+    System.out.println("Settings - Az elso parameterben meg kell adni, hogy a random dolgok random tortenjenek-e off, ha nem, illetve on ha igen a masodik parameterben a pumpa generalasanak az idejet kell megadni a ciszternanal, a harmadikban pedig a cso generalasanak idejet a ciszternanal ");
+}
+
 
     /**
      * Lementi a jatekot es kilep
      * @param file A file amibe ment
      */
     public void SaveAndExit(String file) {
-        try{
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        try( FileOutputStream fileOutputStream = new FileOutputStream(file);
+        		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream) ){
             ArrayList<Object> list=new ArrayList<>();
             ArrayList<Integer> ints=new ArrayList<>();
             ints.add((time-1));
@@ -424,9 +379,8 @@ public class Game implements Notify { //Barni
     }
 
     public void Load(String file){
-        try{
-            FileInputStream fileInputStream=new FileInputStream(file);
-            ObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);
+        try (  FileInputStream fileInputStream = new FileInputStream(file);
+        		ObjectInputStream objectInputStream=new ObjectInputStream(fileInputStream);){
             ArrayList<Object> list=(ArrayList<Object>) objectInputStream.readObject();
             PipeSystem.setMechanic((ArrayList<Mechanic>) list.get(0));
             PipeSystem.setSaboteur((ArrayList<Saboteur>) list.get(1));
@@ -448,7 +402,7 @@ public class Game implements Notify { //Barni
     /**
      * Meghivja az osszes olyan osztaly TimerNotify-at, aminek lepnie kell, mert telt ido
      */
-    public void NotifyAll(){
+    public void NotifyAllTimePassed(){
 
         resetWater();
 
@@ -505,14 +459,14 @@ public class Game implements Notify { //Barni
         if (currentTeam) {
             Mechanic m = (Mechanic)currentPlayer;
             if (m.Repair()) {
-                NotifyAll();
+                NotifyAllTimePassed();
                 stepUsed();
             }
         }
     }
     public void Damage() { //KÉSZ
         if (currentPlayer.getElement().Damage()) {
-            NotifyAll();
+            NotifyAllTimePassed();
             stepUsed();
         }
     }
@@ -520,7 +474,7 @@ public class Game implements Notify { //Barni
         if (currentTeam) {
             Mechanic m = (Mechanic)currentPlayer;
             if (m.Pickuppump()) {
-                NotifyAll();
+                NotifyAllTimePassed();
                 stepUsed();
             }
         }
@@ -530,7 +484,7 @@ public class Game implements Notify { //Barni
             Mechanic m = (Mechanic) currentPlayer;
             boolean siker = m.CutPipe();
             if (siker) {
-                NotifyAll();
+                NotifyAllTimePassed();
                 stepUsed();
             }
             return siker;
@@ -540,7 +494,7 @@ public class Game implements Notify { //Barni
 
     public void SetStucky() {
         if (currentPlayer.SetStucky()) {
-            NotifyAll();
+            NotifyAllTimePassed();
             stepUsed();
         }
     }
@@ -548,7 +502,7 @@ public class Game implements Notify { //Barni
         if (!currentTeam) {
             Saboteur s = (Saboteur) currentPlayer;
             if (s.SetSlippery()) {
-                NotifyAll();
+                NotifyAllTimePassed();
                 stepUsed();
             }
         }
@@ -556,7 +510,7 @@ public class Game implements Notify { //Barni
 
     public void ChangePipe(Pump neighbourPump, Pump toConnect) {
         if(currentPlayer.getElement().ChangePipe(neighbourPump, toConnect)){
-            NotifyAll();
+            NotifyAllTimePassed();
             stepUsed();
         }
     }
@@ -565,21 +519,21 @@ public class Game implements Notify { //Barni
         if (currentTeam) {
             Mechanic m = (Mechanic) currentPlayer;
             if (m.setPump(i, o)) {
-                NotifyAll();
+                NotifyAllTimePassed();
                 stepUsed();
             }
         }
 
     }
     public void Skip() { //KÉSZ
-        NotifyAll();
+        NotifyAllTimePassed();
         stepUsed();
     }
 
     public void Move(Element n) {
         if(currentPlayer.MoveToElement(n)) {
             System.out.println("Move..");
-            NotifyAll();
+            NotifyAllTimePassed();
             stepUsed();
         }
 
