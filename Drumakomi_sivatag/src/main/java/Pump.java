@@ -103,7 +103,7 @@ public class Pump extends Node {
      */
     public boolean Repair(){
         if (broken){
-            System.out.println("A pumpa meg lett javitva");
+            //System.out.println("A pumpa meg lett javitva");
             broken = false;
         }else{
             //System.out.println("A pumpa nem is volt elromolva");
@@ -148,6 +148,22 @@ public class Pump extends Node {
         setInput(i);
         setOutput(o);
         System.out.println("Sikeres pumpa atallitas.");
+        return true;
+    }
+
+    /**
+     * Lecsatlakoztat egy csovet a pumparol
+     * @param p - a cso, amit le akarunk csatlakoztatni
+     * @return - visszaadja, hogy sikeres volt-e
+     */
+    public boolean detachPipe(Pipe p){
+        if(!neighbours.contains(p)){
+            return false;
+        }
+        if(input == p){
+            input = null;
+        }
+        neighbours.remove(p);
         return true;
     }
 }

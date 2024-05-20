@@ -79,7 +79,7 @@ public class Pipe extends Element {
             if (stucky > 0) {
                 p.setCantMove(stucky);
                 stucky = 0;
-                System.out.println("A jatekos sikeresen atmozgott a kivalasztott elemre.");
+                //System.out.println("A jatekos sikeresen atmozgott a kivalasztott elemre.");
                 return true;
             }
             if(slippery>0){
@@ -99,7 +99,7 @@ public class Pipe extends Element {
                 this.GetNeighbours().get(r).Info();
                 return false;
             }
-            System.out.println("A jatekos sikeresen atmozgott a kivalasztott elemre.");
+            //System.out.println("A jatekos sikeresen atmozgott a kivalasztott elemre.");
             return true;
         }
         System.out.println("A csore nem lehetett mozogni, mert mar allnak rajta.");
