@@ -40,12 +40,12 @@ public class TableView extends JPanel implements KeyListener {
         game.setupRound(); // Reset the round
         elements = PipeSystem.getViews();
         setLayout(null);
-        mscore.setBounds(125,135,80,80);
+        mscore.setBounds(125,135,90,80);
         mscore.setVisible(true);
         mscore.setForeground(Color.WHITE);
         this.add(mscore);
 
-        sscore.setBounds(870,135,80,80);
+        sscore.setBounds(870,135,90,80);
         sscore.setVisible(true);
         sscore.setForeground(Color.WHITE);
         this.add(sscore);
