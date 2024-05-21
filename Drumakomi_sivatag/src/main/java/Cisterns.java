@@ -4,12 +4,16 @@ import java.util.Random;
  * Ide folyik a jatek soran a viz
  */
 public class Cisterns extends Node {
+
     /**
-     * Konstruktor
+     * Randomizer
      */
-    public Cisterns(){
-        //PipeSystem.getViews().put(this,new CisternsView());
+    private Random random = new Random();
+
+    public void setAvailablePumps(int availablePumps) {
+        this.availablePumps = availablePumps;
     }
+
     /**
      * Az elerheto pumpak szama
      */
@@ -27,7 +31,7 @@ public class Cisterns extends Node {
      */
     public boolean PickUpPump() {
         if(this.availablePumps > 0) {
-            System.out.println("1 pumpa felvetele sikeresen megtortent");
+            //System.out.println("1 pumpa felvetele sikeresen megtortent");
             this.availablePumps--;
             return true;
         } else {
@@ -49,7 +53,7 @@ public class Cisterns extends Node {
      */
     public void CreatePump(){
         this.availablePumps++;
-        System.out.println("Generalodott egy pumpa a ciszternaknal");
+        //System.out.println("Generalodott egy pumpa a ciszternaknal");
     }
 
     /**
@@ -75,7 +79,7 @@ public class Cisterns extends Node {
     @Override
     public void TimerNotify(){
         if(Game.rand){
-            int number=new Random().nextInt(100);
+            int number= random.nextInt(100);
             if(number>1 && number<20){
                 CreatePipe();
             }else if(number>30 && number<75){

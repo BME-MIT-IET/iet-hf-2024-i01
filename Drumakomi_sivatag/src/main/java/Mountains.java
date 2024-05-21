@@ -65,5 +65,6 @@ public class Mountains extends Node {
      * @param n Az uj storage ertek
      */
     public void SetStorage(int n) {
+      // Mivel vegtelen sok viz van benne minden idopontban, itt nincs ertelme allitani a vizmennyiseget.
     }
 }

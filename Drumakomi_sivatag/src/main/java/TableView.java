@@ -7,7 +7,7 @@ import java.io.*;
 public class TableView extends JPanel implements KeyListener {
 
     HashMap<Element, View> elements;
-    Game game;
+    transient Game game;
     JLabel mscore=new JLabel("Mechanic: 0");
     JLabel sscore=new JLabel("Saboteur: 0");
     JLabel pumpes=new JLabel("Pumpes: 0");
@@ -40,12 +40,12 @@ public class TableView extends JPanel implements KeyListener {
         game.setupRound(); // Reset the round
         elements = PipeSystem.getViews();
         setLayout(null);
-        mscore.setBounds(125,135,80,80);
+        mscore.setBounds(125,135,90,80);
         mscore.setVisible(true);
         mscore.setForeground(Color.WHITE);
         this.add(mscore);
 
-        sscore.setBounds(870,135,80,80);
+        sscore.setBounds(870,135,90,80);
         sscore.setVisible(true);
         sscore.setForeground(Color.WHITE);
         this.add(sscore);
@@ -87,7 +87,7 @@ public class TableView extends JPanel implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-
+        //unused in this context
     }
     public void end(){
         if(game.getEnded()){
@@ -185,49 +185,76 @@ public class TableView extends JPanel implements KeyListener {
     public int getState() {return state;}
 
     public void keyPressed(KeyEvent e) {
-        char key = e.getKeyChar();
-        end();
-        if (state == 0) {
-            if (key == '0') {
-                game.Damage();
-            }
-            if(key=='1'){
-                game.SetStucky();
-            }
-            if(key=='2'){
-                game.Skip();
-            }
-            if(key=='3'){
-                game.SetSlippery();
-            }
-            if(key=='4'){
-                lastPlayerUsedCP = game.currentPlayer;
-                cutPipeView();
-            }
-            if(key=='5'){
-                if (state == 0 && lastRightClickedPump != null) {
-                    neighbourPump = lastRightClickedPump;
-                    state = 2;
-                }
-                setChangePipeView();
-            }
-            if(key=='6'){
-                game.Repair();
-            }
-            if(key=='7'){
-                game.PickUpPump();
-            }
-            if(key=='8'){
-                if (state == 0 && lastRightClickedPipe != null) {
-                    pumpInput = lastRightClickedPipe;
-                    state = 1;
-                }
-                setPumpView();
-            }
-        }
-        end();
-        this.repaint();
+    char key = e.getKeyChar();
+    end();
+
+    if (state == 0) {
+        handleKeyPress(key);
     }
+
+    end();
+    this.repaint();
+}
+
+// Kezeli a billentyű lenyomását a játék állapotának megfelelően
+private void handleKeyPress(char key) {
+    switch (key) {
+        case '0':
+            game.Damage();
+            break;
+        case '1':
+            game.SetStucky();
+            break;
+        case '2':
+            game.Skip();
+            break;
+        case '3':
+            game.SetSlippery();
+            break;
+        case '4':
+            handleCutPipe();
+            break;
+        case '5':
+            handleChangePipe();
+            break;
+        case '6':
+            game.Repair();
+            break;
+        case '7':
+            game.PickUpPump();
+            break;
+        case '8':
+            handleSetPump();
+            break;
+        default:
+            System.out.println("Ismeretlen billentyű.");
+            break;
+    }
+}
+
+// Kezeli a cső elvágásának logikáját
+private void handleCutPipe() {
+    lastPlayerUsedCP = game.currentPlayer;
+    cutPipeView();
+}
+
+// Kezeli a cső csatlakozásának megváltoztatásának logikáját
+private void handleChangePipe() {
+    if (state == 0 && lastRightClickedPump != null) {
+        neighbourPump = lastRightClickedPump;
+        state = 2;
+    }
+    setChangePipeView();
+}
+
+// Kezeli a pumpa beállításának logikáját
+private void handleSetPump() {
+    if (state == 0 && lastRightClickedPipe != null) {
+        pumpInput = lastRightClickedPipe;
+        state = 1;
+    }
+    setPumpView();
+}
 
     public void setPumpView(){
         if(state==1 && pumpInput != lastRightClickedPipe){
@@ -261,23 +288,23 @@ public class TableView extends JPanel implements KeyListener {
             int jobbx;
             int jobby;
             if (uj.GetNeighbours().get(0) == ujpump) {
-                jobbx = elements.get(uj.GetNeighbours().get(1)).x;
-                jobby = elements.get(uj.GetNeighbours().get(1)).y;
+                jobbx = elements.get(uj.GetNeighbours().get(1)).x_cord;
+                jobby = elements.get(uj.GetNeighbours().get(1)).y_cord;
             }
             else {
-                jobbx = elements.get(uj.GetNeighbours().get(0)).x;
-                jobby = elements.get(uj.GetNeighbours().get(0)).y;
+                jobbx = elements.get(uj.GetNeighbours().get(0)).x_cord;
+                jobby = elements.get(uj.GetNeighbours().get(0)).y_cord;
             }
 
             Pipe regiPipe = ((PipeView) elements.get(lastPlayerUsedCP.getElement())).model;
             int balx;
             int baly;
             if (regiPipe.GetNeighbours().get(0) == ujpump) {
-                balx = elements.get(regiPipe.GetNeighbours().get(1)).x;
-                baly = elements.get(regiPipe.GetNeighbours().get(1)).y;
+                balx = elements.get(regiPipe.GetNeighbours().get(1)).x_cord;
+                baly = elements.get(regiPipe.GetNeighbours().get(1)).y_cord;
             }  else {
-                balx = elements.get(regiPipe.GetNeighbours().get(0)).x;
-                baly = elements.get(regiPipe.GetNeighbours().get(0)).y;
+                balx = elements.get(regiPipe.GetNeighbours().get(0)).x_cord;
+                baly = elements.get(regiPipe.GetNeighbours().get(0)).y_cord;
             }
 
 
@@ -298,6 +325,6 @@ public class TableView extends JPanel implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        //unused in this context
     }
 }

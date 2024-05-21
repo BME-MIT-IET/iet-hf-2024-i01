@@ -1,9 +1,15 @@
 import java.util.Random;
+
 /**
  * A csorendszer eleme, amely vizet pumpal a csovekbe.
  */
-//Csaba
+// Csaba
 public class Pump extends Node {
+    /**
+     * Randomizer
+     */
+    private Random random = new Random();
+
     /**
      * Bemeneti cso
      */
@@ -12,6 +18,11 @@ public class Pump extends Node {
      * Kimeneti cso
      */
     private Pipe output;
+
+    public void setBroken(boolean broken) {
+        this.broken = broken;
+    }
+
     /**
      * Jelzi, hogy el van -e torve a cso.
      * True, ha el van.
@@ -19,9 +30,13 @@ public class Pump extends Node {
      */
     private boolean broken = false;
 
-    public boolean getBroken(){return broken;}
+    public boolean getBroken() {
+        return broken;
+    }
+
     /**
      * Beallitja a pumpa bemenetet.
+     * 
      * @param input - uj input cso
      */
     public void setInput(Pipe input) {
@@ -30,26 +45,30 @@ public class Pump extends Node {
 
     /**
      * Beallitja a pumpa kimenetet.
+     * 
      * @param output - uj output cso
      */
     public void setOutput(Pipe output) {
         this.output = output;
     }
 
-    public Pump(){
-        //PipeSystem.getViews().put(this,new PumpView());
+    public Pump() {
+        // PipeSystem.getViews().put(this,new PumpView());
     }
+
     /**
      * Random idokozonkent elromlik a pumpa
      */
     @Override
-    public void TimerNotify(){
-        counter=0;
-        if(Game.rand){
-            if (new Random().nextInt(11)>8){
+    public void TimerNotify() {
+        counter = 0;
+        if (Game.rand) {
+            if (random.nextInt(11) > 8) {
                 broken = true;
             }
-        }else{broken=false;}
+        } else {
+            broken = false;
+        }
 
         if (Game.PumpGenTime == -1 && Game.PipeGenTime == -1) {
             broken = true;
@@ -57,33 +76,35 @@ public class Pump extends Node {
     }
 
     /**
-     * A kimeneti csobe pumpalja a vizet, amit a bemeneten kapott, ha mukodik a pumpa
+     * A kimeneti csobe pumpalja a vizet, amit a bemeneten kapott, ha mukodik a
+     * pumpa
+     * 
      * @param e - amelyik csobol jon a viz
      */
-    public void Path(Element e){
+    public void Path(Element e) {
         if (broken) {
             return;
         }
         vizezett = true;
-        System.out.println("Pumpa");
-        counter ++;
-        if (counter >=10){
+        // System.out.println("Pumpa");
+        counter++;
+        if (counter >= 10) {
             return;
         }
-        if (input == e){
-            if (e.GetStorage() > maxstorage - storage){
+        if (input == e) {
+            if (e.GetStorage() > maxstorage - storage) {
                 e.SetStorage(e.GetStorage() - (maxstorage - storage));
                 storage = maxstorage;
-            }else{
+            } else {
                 int bemenetiCsoStorage = e.GetStorage();
                 e.SetStorage(0);
                 storage += bemenetiCsoStorage;
             }
-        }else{
+        } else {
             System.out.println("Adott cso nem a pumpa bemeneti csove");
             return;
         }
-        if(output!=null) {
+        if (output != null) {
             output.Path(this);
         }
     }
@@ -91,19 +112,20 @@ public class Pump extends Node {
     /**
      * Megjavul a pumpa, ha el volt rontva
      */
-    public boolean Repair(){
-        if (broken){
-            System.out.println("A pumpa meg lett javitva");
+    public boolean Repair() {
+        if (broken) {
+            // System.out.println("A pumpa meg lett javitva");
             broken = false;
-        }else{
-            System.out.println("A pumpa nem is volt elromolva");
+        } else {
+            // System.out.println("A pumpa nem is volt elromolva");
         }
         return true;
     }
+
     /**
-    * Pumpa objektumrol fontosabb informacio kiirasa
-    * */
-    public void Info(){
+     * Pumpa objektumrol fontosabb informacio kiirasa
+     */
+    public void Info() {
         System.out.println("Pumpa info:");
         System.out.println("Pumpa broken: " + broken);
         System.out.println("Pumpaban levo viz: " + storage);
@@ -113,14 +135,15 @@ public class Pump extends Node {
 
     /**
      * Beallitja a pumpa be es kimenetet.
+     * 
      * @param i - input cso
      * @param o - output cso
      * @return - Visszaadja, hogy sikeres volt -e
      */
     public boolean SetPump(Pipe i, Pipe o) {
 
-        boolean talaltI =false;
-        boolean talaltO=false;
+        boolean talaltI = false;
+        boolean talaltO = false;
         for (Element neighbour : neighbours) {
             if (neighbour == i) {
                 talaltI = true;
@@ -130,7 +153,7 @@ public class Pump extends Node {
             }
         }
 
-        if (!talaltI || !talaltO ){
+        if (!talaltI || !talaltO) {
             System.out.println("Sikertelen volt a pumpa atallitasa.");
             return false;
         }
@@ -140,11 +163,21 @@ public class Pump extends Node {
         System.out.println("Sikeres pumpa atallitas.");
         return true;
     }
-    public Pipe getInput() {
-        return input;
-    }
-    public Pipe getOutput() {
-        return output;
+
+    /**
+     * Lecsatlakoztat egy csovet a pumparol
+     * 
+     * @param p - a cso, amit le akarunk csatlakoztatni
+     * @return - visszaadja, hogy sikeres volt-e
+     */
+    public boolean detachPipe(Pipe p) {
+        if (!neighbours.contains(p)) {
+            return false;
+        }
+        if (input == p) {
+            input = null;
+        }
+        neighbours.remove(p);
+        return true;
     }
 }
-
