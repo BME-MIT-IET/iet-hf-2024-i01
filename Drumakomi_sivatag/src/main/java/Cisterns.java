@@ -1,4 +1,5 @@
 import java.util.Random;
+
 //Gergo
 /**
  * Ide folyik a jatek soran a viz
@@ -10,6 +11,10 @@ public class Cisterns extends Node {
      */
     private Random random = new Random();
 
+    public void setAvailablePumps(int availablePumps) {
+        this.availablePumps = availablePumps;
+    }
+
     /**
      * Az elerheto pumpak szama
      */
@@ -17,17 +22,18 @@ public class Cisterns extends Node {
     /**
      * A cso generalas idejenek szamlaloja
      */
-    private int pipegen=0;
+    private int pipegen = 0;
     /**
      * A pumpa generalas idejenek szamlaloja
      */
-    private int pumpgen=0;
+    private int pumpgen = 0;
+
     /**
      * Felvesz a jatekos egy pumpat a ciszternakrol
      */
     public boolean PickUpPump() {
-        if(this.availablePumps > 0) {
-            System.out.println("1 pumpa felvetele sikeresen megtortent");
+        if (this.availablePumps > 0) {
+            // System.out.println("1 pumpa felvetele sikeresen megtortent");
             this.availablePumps--;
             return true;
         } else {
@@ -36,26 +42,27 @@ public class Cisterns extends Node {
         }
     }
 
-
     /**
      * Elérhető
      */
-    public int getAvailablePumps(){
+    public int getAvailablePumps() {
         return availablePumps;
     }
 
     /**
-     * (Noveli a pumpak szamat.) Egy uj felveheto pumpa item generalasa, amit a szerelok fel tudnak venni.
+     * (Noveli a pumpak szamat.) Egy uj felveheto pumpa item generalasa, amit a
+     * szerelok fel tudnak venni.
      */
-    private void CreatePump(){
+    public void CreatePump() {
         this.availablePumps++;
-        System.out.println("Generalodott egy pumpa a ciszternaknal");
+        // System.out.println("Generalodott egy pumpa a ciszternaknal");
     }
 
     /**
-     * Egy uj cso generalasa, aminek az egyik vege a ciszternakon van, masik vege szabad
+     * Egy uj cso generalasa, aminek az egyik vege a ciszternakon van, masik vege
+     * szabad
      */
-    public void CreatePipe(){
+    public void CreatePipe() {
         System.out.println("Generalodott egy cso a ciszternaknal");
         Pipe p = new Pipe();
         p.SetNeighbour(this);
@@ -65,30 +72,31 @@ public class Cisterns extends Node {
     /**
      * Viz jutott a ciszternakba, szerelok kapnak pontot :)
      */
-    public void AddMWater(int water){
+    public void AddMWater(int water) {
         PipeSystem.incMWater(water);
     }
 
     /**
-     * A Cisterns TimerNotify fuggvenye. Ekkor dol el, hogy generalodik-e uj cso vagy felveheto pumpa item.
+     * A Cisterns TimerNotify fuggvenye. Ekkor dol el, hogy generalodik-e uj cso
+     * vagy felveheto pumpa item.
      */
     @Override
-    public void TimerNotify(){
-        if(Game.rand){
-            int number= random.nextInt(101);
-            if(number>1 && number<20){
+    public void TimerNotify() {
+        if (Game.rand) {
+            int number = random.nextInt(100);
+            if (number > 1 && number < 20) {
                 CreatePipe();
-            }else if(number>30 && number<75){
+            } else if (number > 30 && number < 75) {
                 CreatePump();
             }
-        }else{
-            if(pipegen==Game.PipeGenTime){
+        } else {
+            if (pipegen == Game.PipeGenTime) {
                 CreatePipe();
-                pipegen=0;
+                pipegen = 0;
             }
-            if(pumpgen==Game.PumpGenTime){
+            if (pumpgen == Game.PumpGenTime) {
                 CreatePump();
-                pumpgen=0;
+                pumpgen = 0;
             }
             pipegen++;
             pumpgen++;
@@ -97,11 +105,11 @@ public class Cisterns extends Node {
 
     /**
      * Kiirja a ciszterna tulajdonsagait:
-     *      Rajta allo jatekosok
-     *      Szomszedok
-     *      Felszedheto pumpak szama
+     * Rajta allo jatekosok
+     * Szomszedok
+     * Felszedheto pumpak szama
      */
-    public void Info(){
+    public void Info() {
         System.out.println("Ciszterna info:");
         System.out.println("Felszedheto pumpak szama: " + availablePumps);
         super.Info();
@@ -109,6 +117,7 @@ public class Cisterns extends Node {
 
     /**
      * Viz folyasaert felelos fuggveny.
+     * 
      * @param e - A cso ahonnan jon a viz. (Amelyik meghivta a fuggvenyt)
      */
     public void Path(Element e) {

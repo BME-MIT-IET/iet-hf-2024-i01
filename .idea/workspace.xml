@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8952ea6f-7265-45d3-8f26-7e900d57fb12" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Drumakomi_sivatag/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Drumakomi_sivatag/src/test/CucumberTest/resources/test.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Cisterns.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Cisterns.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/CisternsView.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/CisternsView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Element.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Element.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/GameView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/GameView$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/GameView.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/GameView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/IEvents.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/IEvents.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Mechanic.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Mechanic.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Mountains.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Mountains.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/MountainsView.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/MountainsView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Node.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Pipe.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Pipe.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/PipeSystem.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/PipeSystem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/PipeView.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/PipeView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/PlayerView.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/PlayerView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Pump.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Pump.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/PumpView.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/PumpView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Saboteur.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/Saboteur.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/TableView.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/TableView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/View.class" beforeDir="false" afterPath="$PROJECT_DIR$/Drumakomi_sivatag/target/classes/View.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2gbj0yKrZXzzA2DCXCYBZdU587g" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Egyetem/felev_6/iet/hf/iet-hf-2024-i01/Drumakomi_sivatag/src/test/CucumberTest",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="iet-hf-2024-i01" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="iet-hf-2024-i01" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8952ea6f-7265-45d3-8f26-7e900d57fb12" name="Changes" comment="" />
+      <created>1715972954254</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1715972954254</updated>
+      <workItem from="1715972956231" duration="116000" />
+      <workItem from="1715973098886" duration="100000" />
+      <workItem from="1715973208980" duration="30000" />
+      <workItem from="1715974566202" duration="1061000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
