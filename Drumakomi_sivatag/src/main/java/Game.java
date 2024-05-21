@@ -628,7 +628,6 @@ public class Game implements Notify { // Barni
             NotifyAll();
             stepUsed();
         }
-
     }
 
     void stepUsed() {

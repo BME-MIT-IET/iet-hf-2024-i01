@@ -9,10 +9,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 
 class GameTest {
 
@@ -89,13 +87,14 @@ class GameTest {
         System.setOut(new PrintStream(outContent));
 
         try {
+            game.SaveAndExit("test.txt");
             game.Load("test.txt");
 
             String output = outContent.toString().trim();
             String[] lines = output.split(System.lineSeparator());
             String lastLine = lines[lines.length - 1];
 
-            String expectedLastLine = "Az ido lejart, a jatek veget ert!";
+            String expectedLastLine = "Dontetlen lett a jatek";
             assertEquals(expectedLastLine, lastLine);
         } finally {
             System.setOut(originalOut);
