@@ -38,8 +38,15 @@ Feature: Saboteur test
     And The pipe is "not slippery"
     And The pipe is "not sticky"
     When The saboteur make the element to "slippery"
-      Then The pipe should be "slippery"
+    Then The pipe should be "slippery"
+
+
+  Scenario: Set a pipe to sticky
+    Given A saboteur
+    And The saboteur is on a "pipe"
+    And The pipe is "not slippery"
+    And The pipe is "not sticky"
     When The saboteur make the element to "sticky"
-      Then The pipe should be "sticky"
+    Then The pipe should be "sticky"
 
 

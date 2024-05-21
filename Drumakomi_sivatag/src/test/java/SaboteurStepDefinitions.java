@@ -3,6 +3,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.jupiter.api.Assertions;
 
 
 import static org.junit.Assert.assertEquals;
@@ -40,11 +41,15 @@ public class SaboteurStepDefinitions {
         if (condition.equals("sticky")) {
             pipe.setStucky(10);
         }
+        if (condition.equals("slippery")) {
+            pipe.setSlippery(10);
+        }
         if (condition.equals("not slippery")) {
             pipe.setSlippery(0);
         }
         if (condition.equals("not sticky")) {
-            pipe.setSlippery(0);
+            pipe.setStucky(0);
+            Assertions.assertEquals(pipe.isstucky(), false);
         }
     }
 
@@ -62,13 +67,13 @@ public class SaboteurStepDefinitions {
             if (pipe == null) {
                 pipe = new Pipe();
             }
-            saboteur = new Saboteur(1, 0, pipe);
+            saboteur.setElement(pipe);
         }
         else if (type.equals("pump")) {
             if (pump == null) {
                 pump = new Pump();
             }
-            saboteur = new Saboteur(1, 0, pump);
+            saboteur.setElement(pump);
         }
     }
 
@@ -148,9 +153,11 @@ public class SaboteurStepDefinitions {
     @When("The saboteur make the element to {string}")
     public void theSaboteurMakeTheElementTo(String condition) {
         if(condition.equals("slippery")) {
+            pipe.setSlippery(10);
             saboteur.SetSlippery();
         }
         if (condition.equals("sticky")) {
+            pipe.setStucky(10);
             saboteur.SetStucky();
         }
     }
