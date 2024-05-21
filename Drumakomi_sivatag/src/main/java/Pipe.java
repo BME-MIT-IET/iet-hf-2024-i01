@@ -71,41 +71,41 @@ public class Pipe extends Element {
     }
 
     /**
-     * Megallapitja, hogy a jatekos lephet-e az adott elemre, ha a feltetelek megfelelnek
+     * Megallapitja, hogy a jatekos lephet-e az adott elemre, ha a feltetelek
+     * megfelelnek
+     * 
      * @param p - az elementre lepo player
      * @return - lephet-e a jatekos az adott elemre
      */
     @Override
-    public boolean Move(Player p){
-        if (this.player.size() == 0){
+    public boolean Move(Player p) {
+        if (this.player.size() == 0) {
             if (stucky > 0) {
                 p.setCantMove(stucky);
                 stucky = 0;
-                //System.out.println("A jatekos sikeresen atmozgott a kivalasztott elemre.");
+                // System.out.println("A jatekos sikeresen atmozgott a kivalasztott elemre.");
                 return true;
             }
-            if(slippery>0){
-<<<<<<< HEAD
+            if (slippery > 0) {
                 int r = random.nextInt(3) + 1;
-=======
-                int r = random.nextInt(3) - 1;
->>>>>>> main
                 p.getElement().Remove(p);
                 p.setElement(this.GetNeighbours().get(r));
                 this.player.clear();
                 this.GetNeighbours().get(r).SetPlayer(p);
                 System.out.println("A jatekos elcsuszott(, +1 lepest kapott a jatekos a kellemetlensegekert 😎).");
-                /*System.out.println("""
-                        ___  ___  _ __ _ __ _   _\s
-                        / __|/ _ \\| '__| '__| | | |
-                        \\__ \\ (_) | |  | |  | |_| |
-                        |___/\\___/|_|  |_|   \\__, |
-                                              __/ |
-                                             |___/\s""");*/
+                /*
+                 * System.out.println("""
+                 * ___ ___ _ __ _ __ _ _\s
+                 * / __|/ _ \\| '__| '__| | | |
+                 * \\__ \\ (_) | | | | | |_| |
+                 * |___/\\___/|_| |_| \\__, |
+                 * __/ |
+                 * |___/\s""");
+                 */
                 this.GetNeighbours().get(r).Info();
                 return false;
             }
-            //System.out.println("A jatekos sikeresen atmozgott a kivalasztott elemre.");
+            // System.out.println("A jatekos sikeresen atmozgott a kivalasztott elemre.");
             return true;
         }
         System.out.println("A csore nem lehetett mozogni, mert mar allnak rajta.");
@@ -114,19 +114,18 @@ public class Pipe extends Element {
 
     /**
      * Megjavitja a csovet
+     * 
      * @return Sikeres volt-e a muvelet
      */
     public boolean Repair() {
         if (damaged) {
             damaged = false;
-            if(Game.rand){
-<<<<<<< HEAD
+            if (Game.rand) {
                 notDamageable = random.nextInt(3) + 1;
-=======
-                notDamageable = random.nextInt(3) - 1;
->>>>>>> main
-            }else{notDamageable=3;}
-            //System.out.println("A cso meg lett javitva.");
+            } else {
+                notDamageable = 3;
+            }
+            // System.out.println("A cso meg lett javitva.");
             return true;
         }
         System.out.println("A cso nem is volt elromolva, ezert nem lehetett megjavitani.");
@@ -150,18 +149,17 @@ public class Pipe extends Element {
 
     /**
      * Ragadossa teszi a csovet
+     * 
      * @return Sikeres volt-e a muvelet
      */
     public boolean SetStucky() {
         if (stucky == 0) {
-            if(Game.rand){
-<<<<<<< HEAD
-                stucky = random.nextInt( 3) + 1;
-=======
-                stucky = random.nextInt( 3) - 1;
->>>>>>> main
-            }else{stucky=4;}
-            //System.out.println("A cso ragadosra lett allitva " + stucky + " korig.");
+            if (Game.rand) {
+                stucky = random.nextInt(3) + 1;
+            } else {
+                stucky = 4;
+            }
+            // System.out.println("A cso ragadosra lett allitva " + stucky + " korig.");
             return true;
         }
         System.out.println("A muvelet nem vegezgeto el, mert a cso mar ragados.");
@@ -170,18 +168,17 @@ public class Pipe extends Element {
 
     /**
      * Csuszossa teszi a csovet
+     * 
      * @return Sikeres volt-e a muvelet
      */
     public boolean SetSlippery() {
         if (slippery == 0) {
-            if(Game.rand){
-<<<<<<< HEAD
-                slippery = random.nextInt(3)+1 ;
-=======
-                slippery = random.nextInt(3) ;
->>>>>>> main
-            }else{slippery=4;}
-            //System.out.println("A cso csuszossa lett allitva " + slippery + " korig.");
+            if (Game.rand) {
+                slippery = random.nextInt(3) + 1;
+            } else {
+                slippery = 4;
+            }
+            // System.out.println("A cso csuszossa lett allitva " + slippery + " korig.");
             return true;
         }
         System.out.println("A cso mar csuszos, ezert nem lehet duplan csuszossa tenni.");
