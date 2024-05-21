@@ -17,6 +17,11 @@ public class Pump extends Node {
      * Kimeneti cso
      */
     private Pipe output;
+
+    public void setBroken(boolean broken) {
+        this.broken = broken;
+    }
+
     /**
      * Jelzi, hogy el van -e torve a cso.
      * True, ha el van.
@@ -70,7 +75,7 @@ public class Pump extends Node {
             return;
         }
         vizezett = true;
-        System.out.println("Pumpa");
+        //System.out.println("Pumpa");
         counter ++;
         if (counter >=10){
             return;
@@ -98,10 +103,10 @@ public class Pump extends Node {
      */
     public boolean Repair(){
         if (broken){
-            System.out.println("A pumpa meg lett javitva");
+            //System.out.println("A pumpa meg lett javitva");
             broken = false;
         }else{
-            System.out.println("A pumpa nem is volt elromolva");
+            //System.out.println("A pumpa nem is volt elromolva");
         }
         return true;
     }
@@ -143,6 +148,22 @@ public class Pump extends Node {
         setInput(i);
         setOutput(o);
         System.out.println("Sikeres pumpa atallitas.");
+        return true;
+    }
+
+    /**
+     * Lecsatlakoztat egy csovet a pumparol
+     * @param p - a cso, amit le akarunk csatlakoztatni
+     * @return - visszaadja, hogy sikeres volt-e
+     */
+    public boolean detachPipe(Pipe p){
+        if(!neighbours.contains(p)){
+            return false;
+        }
+        if(input == p){
+            input = null;
+        }
+        neighbours.remove(p);
         return true;
     }
 }

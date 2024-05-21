@@ -10,6 +10,10 @@ public class Cisterns extends Node {
      */
     private Random random = new Random();
 
+    public void setAvailablePumps(int availablePumps) {
+        this.availablePumps = availablePumps;
+    }
+
     /**
      * Az elerheto pumpak szama
      */
@@ -27,7 +31,7 @@ public class Cisterns extends Node {
      */
     public boolean PickUpPump() {
         if(this.availablePumps > 0) {
-            System.out.println("1 pumpa felvetele sikeresen megtortent");
+            //System.out.println("1 pumpa felvetele sikeresen megtortent");
             this.availablePumps--;
             return true;
         } else {
@@ -47,9 +51,9 @@ public class Cisterns extends Node {
     /**
      * (Noveli a pumpak szamat.) Egy uj felveheto pumpa item generalasa, amit a szerelok fel tudnak venni.
      */
-    private void CreatePump(){
+    public void CreatePump(){
         this.availablePumps++;
-        System.out.println("Generalodott egy pumpa a ciszternaknal");
+        //System.out.println("Generalodott egy pumpa a ciszternaknal");
     }
 
     /**
