@@ -455,4 +455,16 @@ public class Pipe extends Element {
         System.out.println("Nincs nalad pumpa ahhoz, hogy a csovet ketto tudd fureszelni");
         return false;
     }
+
+    public void setDamaged(boolean b) {
+        damaged = b;
+    }
+
+    public void setStucky(int i) {
+        stucky = i;
+    }
+
+    public void setSlippery(int i) {
+        slippery = i;
+    }
 }
