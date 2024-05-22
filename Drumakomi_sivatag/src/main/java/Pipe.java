@@ -465,6 +465,7 @@ public class Pipe extends Element {
 
     public void setSlippery(int i) {
         slippery = i;
+    }
     // For tests
     public void AddPlayer(Player p) {
         player.add(p);
