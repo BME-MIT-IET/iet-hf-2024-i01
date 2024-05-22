@@ -61,6 +61,11 @@ public abstract class Player implements Serializable {
         this.cantMove = cantMove;
     }
 
+    public int getcantMove(){
+        return cantMove;
+    }
+
+
     /**
      * Beallitja a player element attributumat
      * @param element az uj element

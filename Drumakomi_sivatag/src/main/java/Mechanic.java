@@ -22,6 +22,11 @@ public class Mechanic extends Player{
     public int getPumpes() {
         return pumpes;
     }
+
+    public void setPumpes(int pumpesnumber) {
+        this.pumpes = pumpesnumber;
+    }
+
     /**
      * A pumpnak amin a szerelo al allitja at az inputjat es outputjat
      * @param i Az elemnek amin allunk az i-edik szomszedja
