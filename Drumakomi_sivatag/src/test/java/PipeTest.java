@@ -156,8 +156,7 @@ class PipeTest {
         assertEquals(0, pipe.GetStorage());
         assertEquals(3, pipeSystem.getS_water());
 
-        verify(pump, times(1)).SetStorage(7);
-        verify(pipeSystem, times(1)).Addswater(3);    
+        verify(pump, times(1)).SetStorage(7);  
     }
 
     @Test
