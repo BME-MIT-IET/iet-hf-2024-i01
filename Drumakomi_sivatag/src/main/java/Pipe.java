@@ -436,7 +436,7 @@ public class Pipe extends Element {
             Pump newPump = new Pump();
             Pipe newPipe = new Pipe();
 
-            regiPumpa2.neighbours.remove(this); // regi cso remove hegybol
+            regiPumpa2.GetNeighbours().remove(this); // regi cso remove hegybol
             this.neighbours.remove(regiPumpa2); // eredeti cso kimenetenek a beallitasa
             this.neighbours.add(newPump);
             newPump.SetNeighbour(this);

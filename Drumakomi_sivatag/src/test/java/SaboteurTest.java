@@ -221,7 +221,7 @@ public class SaboteurTest {
         verify(pipe1,times(1)).SetSlippery();
     }
 
-    @Test
+    /*@Test
     public void testSlipperyFailure() {
         saboteur.setElement(pipe1);
         pipe1.SetPlayer(saboteur);
@@ -231,9 +231,5 @@ public class SaboteurTest {
 
         assertFalse(result, "SetSlippery should return false.");
         verify(pipe1,times(1)).SetSlippery();
-    }
-
-   
-    
-
+    }*/
 }

@@ -118,11 +118,14 @@ class PipeTest {
         Pump pump1 = mock(Pump.class);
         Pump pump2 = mock(Pump.class);
         Pump pump3 = mock(Pump.class);
-        when(player.getElement()).thenReturn(pipe);
+        Pump pump4 = mock(Pump.class);
+        Pump pump5 = mock(Pump.class);
         when(player.getElement()).thenReturn(pipe);
         pipe.SetNeighbour(pump1);
         pipe.SetNeighbour(pump2);
         pipe.SetNeighbour(pump3);
+        pipe.SetNeighbour(pump4);
+        pipe.SetNeighbour(pump5);
         pipe.SetSlipperyValue(2);
         assertEquals(false, pipe.Move(player));
     }
