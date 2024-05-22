@@ -31,6 +31,7 @@ So all of these issues have been fixed. It was pretty time-consuming to fix all 
 ## Results:
 
 This tool proved to be useful not only by pointing out code-smells, but also identified security hotspots, gave us test code-coverage detailed data and its quality gates helped us with reviewing new code.
-All in all we started out with 370 active issues, and ended with just 187 issues (only 1/4 of this is medium, the other 3/4 are classified with small severity). 
+All in all we started out with 427 active issues, and ended with just 265 issues (only 1/3 of this is medium, the other 2/3 are classified with small severity). 
 
-//to do add image!!!
+![image](https://github.com/BME-MIT-IET/iet-hf-2024-i01/assets/91149030/b0a3d1e4-e2f5-4d74-a2bf-e4f80a999f23)
+
