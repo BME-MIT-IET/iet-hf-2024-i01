@@ -455,7 +455,6 @@ public class Pipe extends Element {
         System.out.println("Nincs nalad pumpa ahhoz, hogy a csovet ketto tudd fureszelni");
         return false;
     }
-
     public void setDamaged(boolean b) {
         damaged = b;
     }
@@ -466,5 +465,20 @@ public class Pipe extends Element {
 
     public void setSlippery(int i) {
         slippery = i;
+    // For tests
+    public void AddPlayer(Player p) {
+        player.add(p);
+    }
+
+    public void SetStuckyValue(int newValue) {
+        stucky = newValue;
+    }
+
+    public void SetSlipperyValue(int newValue) {
+        slippery = newValue;
+    }
+
+    public void SetNotDamageable(int newValue) {
+        notDamageable = newValue;
     }
 }

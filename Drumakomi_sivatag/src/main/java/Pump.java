@@ -180,4 +180,21 @@ public class Pump extends Node {
         neighbours.remove(p);
         return true;
     }
+    /**
+     * Visszaadja a pumpa bemeneti csovet
+     * 
+     * @return - a bemeneti cso
+     */
+    public Pipe getInput() {
+        return input;
+    }
+
+    /**
+     * Visszaadja a pumpa kimeneti csovet
+     * 
+     * @return - a kimeneti cso
+     */
+    public Pipe getOutput() {
+        return output;
+    }
 }
