@@ -10,22 +10,6 @@ public class Pipe extends Element {
      */
     private Random random = new Random();
 
-    public void setDamaged(boolean damaged) {
-        this.damaged = damaged;
-    }
-
-    public void setSlippery(int slippery) {
-        this.slippery = slippery;
-    }
-
-    public void setNotDamageable(int notDamageable) {
-        this.notDamageable = notDamageable;
-    }
-
-    public void setStucky(int stucky) {
-        this.stucky = stucky;
-    }
-
     /**
      * Torott a cso vagy nem
      */
@@ -103,7 +87,7 @@ public class Pipe extends Element {
                 return true;
             }
             if (slippery > 0) {
-                int r = random.nextInt(3) - 1;
+                int r = random.nextInt(3) + 1;
                 p.getElement().Remove(p);
                 p.setElement(this.GetNeighbours().get(r));
                 this.player.clear();
@@ -137,7 +121,7 @@ public class Pipe extends Element {
         if (damaged) {
             damaged = false;
             if (Game.rand) {
-                notDamageable = random.nextInt(3) - 1;
+                notDamageable = random.nextInt(3) + 1;
             } else {
                 notDamageable = 3;
             }
@@ -171,7 +155,7 @@ public class Pipe extends Element {
     public boolean SetStucky() {
         if (stucky == 0) {
             if (Game.rand) {
-                stucky = random.nextInt(3) - 1;
+                stucky = random.nextInt(3) + 1;
             } else {
                 stucky = 4;
             }
@@ -190,7 +174,7 @@ public class Pipe extends Element {
     public boolean SetSlippery() {
         if (slippery == 0) {
             if (Game.rand) {
-                slippery = random.nextInt(3);
+                slippery = random.nextInt(3) + 1;
             } else {
                 slippery = 4;
             }
@@ -452,7 +436,7 @@ public class Pipe extends Element {
             Pump newPump = new Pump();
             Pipe newPipe = new Pipe();
 
-            regiPumpa2.GetNeighbours().remove(this); // regi cso remove hegybol
+            regiPumpa2.neighbours.remove(this); // regi cso remove hegybol
             this.neighbours.remove(regiPumpa2); // eredeti cso kimenetenek a beallitasa
             this.neighbours.add(newPump);
             newPump.SetNeighbour(this);
@@ -471,7 +455,16 @@ public class Pipe extends Element {
         System.out.println("Nincs nalad pumpa ahhoz, hogy a csovet ketto tudd fureszelni");
         return false;
     }
+    public void setDamaged(boolean b) {
+        damaged = b;
+    }
 
+    public void setStucky(int i) {
+        stucky = i;
+    }
+
+    public void setSlippery(int i) {
+        slippery = i;
     // For tests
     public void AddPlayer(Player p) {
         player.add(p);

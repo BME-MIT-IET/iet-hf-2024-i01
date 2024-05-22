@@ -63,7 +63,7 @@ public class Pump extends Node {
     public void TimerNotify() {
         counter = 0;
         if (Game.rand) {
-            if (random.nextInt(11) > 8) {
+            if (random.nextInt(11) + 1 > 8) {
                 broken = true;
             }
         } else {
