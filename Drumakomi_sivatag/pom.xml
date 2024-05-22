@@ -7,39 +7,7 @@
     <groupId>org.example</groupId>
     <artifactId>Drumakomi_sivatag</artifactId>
     <version>1.0-SNAPSHOT</version>
-
-
-<profile>
-  <id>coverage</id>
-  <build>
-   <plugins>
-    <plugin>
-      <groupId>org.jacoco</groupId>
-     <artifactId>jacoco-maven-plugin</artifactId>
-      <version>0.8.7</version>
-      <executions>
-        <execution>
-          <id>prepare-agent</id>
-          <goals>
-            <goal>prepare-agent</goal>
-          </goals>
-        </execution>
-        <execution>
-          <id>report</id>
-          <goals>
-            <goal>report</goal>
-          </goals>
-          <configuration>
-            <formats>
-              <format>XML</format>
-            </formats>
-          </configuration>
-        </execution>
-      </executions>
-    </plugin>
-   </plugins>
-  </build>
-</profile>
+         
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
         <maven.compiler.target>22</maven.compiler.target>
@@ -47,6 +15,7 @@
         <sonar.organization>bme-mit-iet-org</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
+    
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -89,23 +58,9 @@
             <artifactId>cucumber-core</artifactId>
             <version>7.18.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.2.5</version>
-        </dependency>
     </dependencies>
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.2.5</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
 
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -115,15 +70,23 @@
                     <release>11</release>
                 </configuration>
             </plugin>
-            <!--  JUnit 5 requires Surefire version 2.22.1 or higher  -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/*Tests.java</include>
+                        <include>**/*TestCase.java</include>
+                        <include>**/*.feature</include>
+                    </includes>
+                </configuration>
                 <dependencies>
                     <dependency>
-                        <groupId>org.apache.maven.surefire</groupId>
-                        <artifactId>surefire-junit4</artifactId>
-                        <version>3.2.5</version>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-surefire-provider</artifactId>
+                        <version>1.8.2</version>
                     </dependency>
                 </dependencies>
             </plugin>
