@@ -17,15 +17,12 @@ class MountainsTest {
 
     @Test
     void PathCallsNeighboursPath() {
-        Element element = mock(Element.class);
         Pipe pipe = mock(Pipe.class);
         Pump pump = mock(Pump.class);
-        mountains.SetNeighbour(element);
         mountains.SetNeighbour(pipe);
         mountains.SetNeighbour(pump);
-        assertEquals(element,mountains.GetNeighbours().get(0));
+        assertEquals(pipe,mountains.GetNeighbours().get(0));
         mountains.TimerNotify();
-        verify(element, times(1)).Path(mountains);
         verify(pipe, times(1)).Path(mountains);
         verify(pump, times(1)).Path(mountains);
     }

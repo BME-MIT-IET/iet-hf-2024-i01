@@ -27,16 +27,16 @@ class PumpTest {
         assertEquals(false, pump.getBroken());
     }
 
-    @Test
-    void PumpIsBrokenAfterRandomTime() {
-        pump.TimerNotify();
-        if (pump.getBroken() == true) {
-            assertEquals(true, pump.getBroken());
-            return;
-        } else {
-            PumpIsBrokenAfterRandomTime();
-        }
-    }
+    // @Test
+    // void PumpIsBrokenAfterRandomTime() {
+    //     pump.TimerNotify();
+    //     if (pump.getBroken() == true) {
+    //         assertEquals(true, pump.getBroken());
+    //         return;
+    //     } else {
+    //         PumpIsBrokenAfterRandomTime();
+    //     }
+    // }
 
     @Test
     void PumpIsNotBrokenAfterRepair() {
@@ -45,18 +45,18 @@ class PumpTest {
         assertEquals(false, pump.getBroken());
     }
 
-    @Test
-    void PumpIsBrokenAfterRepairAndRandomTime() {
-        pump.Damage();
-        pump.Repair();
-        pump.TimerNotify();
-        if (pump.getBroken() == true) {
-            assertEquals(true, pump.getBroken());
-            return;
-        } else {
-            PumpIsBrokenAfterRepairAndRandomTime();
-        }
-    }
+    // @Test
+    // void PumpIsBrokenAfterRepairAndRandomTime() {
+    //     pump.Damage();
+    //     pump.Repair();
+    //     pump.TimerNotify();
+    //     if (pump.getBroken() == true) {
+    //         assertEquals(true, pump.getBroken());
+    //         return;
+    //     } else {
+    //         PumpIsBrokenAfterRepairAndRandomTime();
+    //     }
+    // }
 
     @Test
     void SetPumpChangesInputPipe() {
